@@ -1,0 +1,186 @@
+/* timer */
+#drun {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	margin-left: -250px;
+	padding: 6px 10px;
+	width: 500px;
+	color: #036;
+	background-color: transparent;
+	z-index: 10;
+}
+#drun.running {
+	color: #036;
+	background-color: #6cf;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	-moz-box-shadow: 0 0 5px #036;
+	-webkit-box-shadow: 0 0 5px #036;
+	box-shadow: 0 0 5px #036;
+	text-align: center;
+}
+#drun.paused {
+	color: #036;
+	background-color: #39c;
+	border: 1px solid #39c;
+	text-align: center;
+}
+#drun p {
+	font-size: 11px;
+	margin: 0;
+	padding: 0;
+	line-height: 1.75em;
+}
+#drun p input {
+	color: #036;
+	width: 300px;
+	border: 0;
+	padding: 2px 5px 3px;
+	background-color: #39c;
+	-moz-box-shadow: 0 0 3px #069;
+	-webkit-box-shadow: 0 0 3px #069;
+	box-shadow: 0 0 3px #069;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+#drun p input:focus {
+	color: #000;
+	background-color: #5be;
+}
+#drun p span#dtimer {
+	float: left;
+	font-size: 12px;
+	font-weight: bold;
+	color: #fff;
+	text-shadow: 0 0 2px #333;
+}
+#drun div {
+	float: right;
+}
+#drun button {
+	opacity: 0.5;
+	-moz-opacity: 0.5;
+	filter: alpha(opacity=50);
+}
+#drun button:hover, #drun button:focus {
+	opacity: 1;
+	-moz-opacity: 1;
+	filter: alpha(opacity=100);
+	outline: 0 none;
+}
+#timerstatus.loading {
+	background: url(../img/barloader.gif) no-repeat center center;
+}
+#timerstatus.loading button {
+	opacity: 0;
+	-moz-opacity: 0;
+	filter: alpha(opacity=0);
+	visibility: hidden;
+}
+/* form */
+form#f_task_batch {
+	padding: 10px;
+}
+form#f_task_batch textarea {
+	width: 360px;
+	height: 280px;
+}
+form#f_task_edit label {
+	color: #666;
+}
+form#f_task_edit input#i_title {
+	width: 360px;
+}
+form#f_task_edit input#i_deadline {
+	width: 80px;
+}
+form#f_task_edit textarea {
+	width: 360px;
+	height: 150px;
+}
+form#f_task_timer ol.side li {
+	line-height: 2em;
+}
+form#f_task_timer ol.side li label {
+	color: #666;
+	width: 55px;
+	margin-right: 5px;
+	text-align: right;
+}
+p#vtip { 
+	display: none; 
+	position: absolute; 
+	padding: 10px; 
+	left: 5px;
+	margin-right: 8px;
+	max-width: 340px;
+	font-size: 0.8em; 
+	background-color: white; 
+	border: 1px solid #69c; 
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px; 
+	-moz-box-shadow: 0 0 5px #ccc;
+	-webkit-box-shadow: 0 0 5px #ccc;
+	box-shadow: 0 0 5px #ccc;
+	z-index: 9999;
+}
+p#vtip #vtipArrow { 
+	position: absolute;
+	top: -10px; 
+	left: 5px;
+}
+p#vtip.inv {
+	max-width: 50px;
+	text-align: center;
+}
+p#vtip.inv #vtipArrow {
+	left: 40px;
+}
+div.tabs {
+
+}
+div.tabs ul.nav {
+	height: 20px;
+	padding: 0 0 0 10px;
+	margin: 0 5px;
+	border-bottom: 2px solid #999;
+}
+div.tabs ul.nav li {
+	float: left;
+	list-style: none;
+	margin: 0 0 0 2px;
+}
+div.tabs ul.nav li a {
+	display: block;
+	padding: 2px 8px;
+	font-size: 12px;
+	line-height: 14px;
+	color: #fff;
+	background-color: #ccc;
+	text-decoration: none;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+div.tabs ul.nav li a:hover {
+	background-color: #bbb;
+}
+div.tabs ul.nav li.activeli a {
+	background-color: #999;
+}
+div.tabs div.tab {
+	padding: 5px;
+}
+div.help {
+	font-size: 10px;
+	color: #666;
+}

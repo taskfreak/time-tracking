@@ -1,0 +1,297 @@
+/**
+ * fields should always be under a OL.fields
+ * OL.side will show labels on the left
+ * OL.multicol may have multi columns
+ * -> LI.newrow stars a new row
+ * SPAN.error for error messages
+ */
+
+/* layout */
+ol.fields {
+	list-style: none;
+	padding: 0 0 5px 5px;
+}
+ol.lined li {
+	border-bottom: 1px solid #eee;
+}
+ol li.linefree {
+	border-bottom: 0px none;
+}
+ol.side li {
+	padding-top: 2px;
+	padding-bottom: 6px;
+}
+ol.side li label {
+	float: left;
+	width: 120px;
+	padding: 2px 0 0 4px;
+	color: #333;
+}
+ol.top li label {
+	display: block;
+}
+ol.fields li.compulsory {
+}
+ol.fields li.compulsory label {
+	/* color: #600; */
+	background: transparent url(../img/compulsory.png) no-repeat right top;
+}
+ol.fields li span, ol.fields li small.nline {
+	padding: 2px 0 0 4px;
+}
+ol.fields li span.ui-icon {
+	padding: 0;
+}
+ol.side li span, ol.side li small.nline {
+	display: block;
+	margin-left: 120px;
+}
+ol.fields li.buttons {
+	border-bottom: 0px none;
+}
+ol.side li.buttons {
+	padding-left: 122px;
+}
+ol.fields ul {
+	clear: left;
+	list-style: none;
+}
+ol.fields ul li {
+	border-bottom: 0 none;
+}
+ol.fields li.inline {
+	padding: 6px 4px;
+}
+ol.fields li.inline span {
+	display: inline;
+}
+ol.side ul {
+	margin: 0 0 -18px 100px;
+	position:relative;
+	top:-18px;
+}
+ol.side ul li label, ol li.inline label {
+	padding: 0;
+	width: auto;
+	float: none;
+	display: inline;
+}
+ol.multicol li {
+	float: left;
+	margin-left: 12px;
+}
+ol.multicol li.nline {
+	clear: left;
+	margin-left: 0;
+}
+ol.side li strong {
+	display: block;
+	padding-left: 124px;
+}
+ol.side li span.error {
+	display: block;
+	/* padding-left: 124px; */
+	font-size: .917em;
+	color: #900;
+}
+/* fields */
+input, textarea, option {
+	font-style: Helvetica, Arial, sans-serif;
+	font-size: 1em;
+}
+ol.styled input, ol.styled select, ol.styled textarea {
+	padding: 2px;
+	border: 2px solid #666;
+	background-color: #fff;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+ol.styled input:focus, ol.styled select:focus, ol.styled textarea:focus {
+	border-color: #333;
+	outline: none;
+}
+.wxxs {
+	width: 30px;
+}
+.wxs {
+	width: 50px;
+}
+.ws {
+	width: 80px;
+}
+.wm {
+	width: 120px;
+}
+.wl {
+	width: 250px;
+}
+.wxl {
+	width: 400px;
+}
+.wxxl {
+	width: 99%;
+}
+textarea.hs {
+	height: 50px;
+}
+textarea.hm {
+	height: 100px;
+}
+textarea.hl {
+	height: 200px;
+}
+textarea.hxl {
+	height: 350px;
+}
+input.fake, textarea.fake {
+	border: 1px solid transparent;
+}
+input.file {
+	border: 0 none;
+}
+input.red, textarea.red {
+	border: 1px solid #933;
+	background-color: #fff3f3;
+}
+input.date {
+	width: 80px;
+}
+input.time, input.duration {
+	width: 60px;
+}
+ol.fields li span.dateEntry_wrap, ol.fields li span.timeEntry_wrap {
+	padding: 0;
+	margin-left: 3px;
+	display: inline;
+}
+ol.fields li span.dateEntry_control, ol.fields li span.timeEntry_control {
+	padding: 0;
+	margin: 0 0 0 3px;
+	display: inline;
+}
+/* captcha */
+ol li.form_captcha {
+}
+ol li.form_captcha span.cms_captcha {
+	display:block;
+	margin: 0 0 12px 0;
+	width: 360px;
+	height: 40px;
+	border: 2px solid #369;
+	background-color: #fff;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+ol li.form_captcha span.cms_captcha img {
+	float: left;
+}
+ol li.form_captcha span.cms_captcha input {
+	float: left;
+	border: 0 none;
+	border-left: 2px dotted #69c;
+	width: 140px;
+	height: 24px;
+	padding: 8px 5px;
+	vertical-align: middle;
+}
+ol li.form_captcha span.tznError {
+	display: block;
+	padding: 3px 0;
+	font-size: 1em;
+	color: #900;
+}
+ol.fields li.form_captcha span.cms_captcha {
+	margin: 0 0 12px 122px;
+}
+/* buttons */
+button, a.button {
+	color: #333;
+	font-size: 12px;
+	border: 1px solid #ccc;
+	padding: 1px 4px;
+	/* height: 22px; */
+	background-image: url(../img/bg-buttons.png);
+	background-position: 0 0;
+	background-repeat: repeat-x;
+	text-decoration: none;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+a.button {
+	padding: 2px 4px;
+	height: auto;
+}
+button:hover, a.button:hover, button:focus, a.button:focus  {
+	color: #000;
+	border-color: #999;
+	cursor: pointer;
+}
+button.create, a.create {
+	background-position: -30px -22px;
+}
+button.submit, a.submit {
+	background-position: -30px -22px;
+}
+button.save {
+	padding-left: 30px;
+	background-position: 0 -22px;
+}
+button.saveclose {
+	padding-left: 30px;
+	background-position: 0 -44px;
+}
+button.saveadd {
+	padding-left: 30px;
+	background-position: 0 -66px;
+}
+button.delete, a.delete {
+	padding-left: 30px;
+	background-position: 0 -88px;
+}
+button.warn, a.warn {
+	background-position: -30px -88px;
+}
+.close {
+	margin-left: 10px;
+	padding: 0 4px 2px 10px;
+	background: transparent url(../img/cross.png) no-repeat left center;
+}
+a.close {
+	color: #333;
+	text-decoration: underline;
+}
+a.close:hover {
+	color: #000;
+}
+.faded {
+	opacity: 0.3;
+	-moz-opacity: 0.3;
+	filter: alpha(opacity=30);
+}
+.marge {
+	margin-left: 10px;
+}
+/*
+#ajax-load {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.7;
+	-moz-opacity: 0.7;
+	filter: alpha(opacity=70);
+	background: #fff url(../img/loading.gif) no-repeat center center;
+	z-index: 200;
+	behavior: url(/assets/css/iedivfix.htc);
+}
+.loading {
+	opacity: 0.5;
+	-moz-opacity: 0.5;
+	filter: alpha(opacity=50);
+	background: url(../img/loading.gif) no-repeat center center;
+}
+*/

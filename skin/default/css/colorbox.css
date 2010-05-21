@@ -1,0 +1,139 @@
+/*
+    ColorBox Core Style
+    The following rules are the styles that are consistant between themes.
+    Avoid changing this area to maintain compatability with future versions of ColorBox.
+*/
+#colorbox, #cboxOverlay, #cboxWrapper{position:absolute; top:0; left:0; z-index:98; overflow:hidden;}
+#cboxOverlay{position:fixed; width:100%; height:100%;}
+#cboxMiddleLeft, #cboxBottomLeft{clear:left;}
+#cboxContent{position:relative; overflow:visible;}
+#cboxLoadedContent{overflow:auto;}
+#cboxLoadedContent iframe{display:block; width:100%; height:100%; border:0;}
+#cboxTitle{margin:0;}
+#cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0; width:100%;}
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
+
+/* 
+    ColorBox example user style
+    The following rules are ordered and tabbed in a way that represents the
+    order/nesting of the generated HTML, so that the structure easier to understand.
+*/
+#cboxOverlay{background:#fff;}
+
+#colorbox{}
+    #cboxContent{
+    	border:5px solid #ccc;-webkit-border-radius: 5px;
+    	-moz-border-radius: 5px;
+    	border-radius: 5px;
+    	margin-top:32px;
+    	}
+        #cboxLoadedContent{background:#eee; padding:1px;}
+        #cboxLoadedContent>div { padding:5px; }
+        #cboxLoadingGraphic{background:url(../img/loading.gif) center center no-repeat;}
+        #cboxLoadingOverlay{background:#eee;}
+        #cboxTitle{position:absolute; top:-22px; left:9px; color:#999;}
+        #cboxCurrent{position:absolute; top:-22px; right:205px; text-indent:-9999px;}
+        #cboxSlideshow, #cboxPrevious, #cboxNext, #cboxClose{text-indent:-9999px; width:20px; height:20px; position:absolute; top:-20px; background:url(../img/controls.png) 0 0 no-repeat;}
+        #cboxPrevious{background-position:0px 0px; right:44px;}
+        #cboxPrevious.hover{background-position:0px -25px;}
+        #cboxNext{background-position:-25px 0px; right:22px;}
+        #cboxNext.hover{background-position:-25px -25px;}
+        #cboxClose{background-position:-50px 0px; right:0; margin-top:-5px}
+        #cboxClose.hover{background-position:-50px -25px;}
+        .cboxSlideshow_on #cboxPrevious, .cboxSlideshow_off #cboxPrevious{right:66px;}
+        .cboxSlideshow_on #cboxSlideshow{background-position:-75px -25px; right:44px;}
+        .cboxSlideshow_on #cboxSlideshow.hover{background-position:-100px -25px;}
+        .cboxSlideshow_off #cboxSlideshow{background-position:-100px 0px; right:44px;}
+        .cboxSlideshow_off #cboxSlideshow.hover{background-position:-75px -25px;}
+
+#cboxLoadedContent h1 {
+	color: #369;
+	font-size: 12px;
+	padding: 9px 20px 12px;
+	text-align: center;
+}
+#cboxLoadedContent table {
+	border-collapse: separate;
+	border-spacing: 1px;
+}
+#cboxLoadedContent #tab1 table {
+	width: 100%;
+}
+#cboxLoadedContent #tab1 table tr {
+	vertical-align: top;
+}
+#cboxLoadedContent #tab1 table tr th {
+	text-align: left;
+	font-weight: normal;
+	color: #666;
+	padding: 2px;
+	width: 20%;
+}
+#cboxLoadedContent #tab1 table tr td {
+	text-align: left;
+	padding: 2px;
+	width: 80%;
+}
+#cboxLoadedContent #tab2 table {
+	width: 100%;
+}
+#cboxLoadedContent #tab2 table tr {
+}
+#cboxLoadedContent #tab2 table tr td {
+	padding: 2px;
+	width: 40%;
+}
+#cboxLoadedContent #tab2 table tr td:last-child {
+	text-align: right;
+	width: 20%;
+}
+#cboxLoadedContent #tab2 table thead tr th {
+	padding: 2px;
+	font-weight: normal;
+	text-align: left;
+	background-color: #ccc;
+}
+#cboxLoadedContent #tab2 table thead tr th:last-child {
+	text-align: right;
+}
+#cboxLoadedContent #tab2 table tbody tr td {
+	border-top: 1px solid #ccc;
+}
+#cboxLoadedContent #tab2 table tfoot tr td {
+	border-top: 1px solid #999;
+	background-color: #ccc;
+}
+#cboxLoadedContent #tab2 table tbody tr td a.onhold {
+	display: none;
+	float: left;
+	background-image: url(../img/b-delete.png);
+	width: 16px;
+	height: 16px;
+	text-align: left;
+	text-indent: -9999px;
+}
+#cboxLoadedContent #tab2 table tbody tr:hover td {
+	background-color: #fff;
+}
+#cboxLoadedContent #tab2 table tbody tr:hover td a.onhold {
+	display: block;
+}
+#cboxLoadedContent #sidepanel {
+	float: right;
+	color: #666;
+	font-size: 10px;
+}
+#cboxLoadedContent #sidepanel h4 {
+	padding: 6px 0 3px;
+}
+#cboxLoadedContent #sidepanel p {
+	padding-bottom: 4px;
+	line-height: 1.35em;
+}
+#cboxLoadedContent #sidepanel small {
+	font-size: 10px;
+	color: #999;
+}
+#cboxLoadedContent #sidepanel ul li {
+	padding: 1px 0 2px 0;
+}

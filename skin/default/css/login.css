@@ -1,0 +1,14 @@
+form {
+	position: relative;
+	top: 60px;
+	left: 50%;
+	width: 300px;
+	margin-left: -150px;
+}
+form p {
+	color: #c00;
+	text-align: center;
+}
+form input {
+	width: 120px;
+}

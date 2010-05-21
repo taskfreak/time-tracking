@@ -1,0 +1,308 @@
+ul.links {
+	list-style: none;	
+}
+ul.links li a, p.links a {
+	color: #333;
+	display: block;
+	font-size: 11px;
+	padding: 1px 4px 2px;
+	line-height: 1.25em;
+	text-decoration: none;
+}
+ul.verti {
+	padding-left: 0;
+}
+ul.verti li a, p.links a {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+ul.horiz {
+	float: left;
+}
+ul.horiz li {
+	float: left;
+}
+ul.horiz li a {
+	background: #ccc;
+	border-right: 1px solid #fff;
+}
+ul.horiz li:first-child a {
+	padding-left: 7px;
+	-webkit-border-top-left-radius: 8px;
+	-webkit-border-bottom-left-radius: 8px;
+	-moz-border-radius-topleft: 8px;
+	-moz-border-radius-bottomleft: 8px;
+	border-radius: 8px 0 0 8px;
+}
+ul.horiz li:last-child a {
+	padding-right: 7px;
+	-webkit-border-top-right-radius: 8px;
+	-webkit-border-bottom-right-radius: 8px;
+	-moz-border-radius-topright: 8px;
+	-moz-border-radius-bottomright: 8px;
+	border-radius: 0 8px 8px 0;
+}
+ul.links li a:hover {
+	background-color: #9cf;
+}
+ul.links li.active a, p.links a.active  {
+	color: #fff;
+	background-color: #39c;
+}
+/* main panel : filters */
+#dfilters {
+	padding: 0 20px 6px 0;
+}
+#dfilters p {
+	text-align: center;
+}
+#dfilters span {
+	float: right;
+}
+#dfilters form input {
+	padding: 1px 4px;
+	border: 1px solid #333;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+#dfilters form input:focus {
+	background-color: #ffc;
+}
+#dfilters form button {
+	padding: 1px 2px;
+}
+/* main panel (list) */
+#dlist {
+	background: #fff;
+	border: 1px solid #e3e3e3;
+	margin: 0 10px 0 0;
+	min-height: 300px;
+	padding: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+/* table */
+#dlist table {
+	border-collapse: separate;
+	border-spacing: 1px;
+	/* border: 1px solid #ccc; */
+	font-size: 9pt;
+	width: 100%;
+}
+#dlist table th, #dlist table td {
+	padding: 4px 6px;
+}
+#dlist table thead th {
+	font-weight: normal;
+	background-color: #999;
+	color: #fff;
+	border-top: 1px solid #bbb;
+	border-bottom: 1px solid #999;
+}
+#dlist table thead th small {
+	padding-top: 2px;
+	float: right;
+}
+#dlist table tbody tr td {
+	border-bottom: 1px solid #ccc;
+}
+#dlist table tbody tr.overdue td {
+	color: #c00;
+}
+#dlist table tbody tr.today td {
+	color: #36c;
+}
+#dlist table tbody tr.future td {
+	/* font-size: .87em; */
+	color: #999;
+	border-bottom-color: #eee;
+}
+#dlist table tbody tr.current td {
+	color: #000;
+	background-color: #cef;
+}
+#dlist table tbody tr.noline td {
+	border-bottom: 1px solid #eee;
+}
+#dlist table tbody tr.timer td {
+	color: #666;
+}
+/* task list columns */
+#dlist.tasks table thead th:first-child, #dlist.tasks table tbody td:first-child {
+	width: 2%;
+}
+#dlist.tasks table thead th:nth-child(2), #dlist.tasks table tbody td:nth-child(2) {
+	text-align: left;
+	width: 9%;
+}
+#dlist.tasks table thead th:nth-child(3), #dlist.tasks table tbody td:nth-child(3) {
+	text-align: left;
+	width: 62%;
+}
+#dlist.tasks table thead th:nth-child(4), #dlist.tasks table tbody td:nth-child(4),
+#dlist.tasks table thead th:nth-child(5), #dlist.tasks table tbody td:nth-child(5) {
+	text-align: center;
+	width: 9%;
+}
+#dlist.tasks table thead th:nth-child(6), #dlist.tasks table tbody td:nth-child(6) {
+	text-align: right;
+	width: 9%;
+}
+/* user list columns */
+#dlist.users table thead th:first-child, #dlist.users table tbody td:first-child {
+	text-align: left;
+	width: 80%;
+}
+#dlist.users table thead th:nth-child(2), #dlist.users table tbody td:nth-child(2) {
+	text-align: center;
+	width: 20%;
+}
+#dlist.users table tbody td small {
+	margin-left: 9px;
+	color: #369;
+}
+/* priorities */
+#dlist table tbody tr td span.prio {
+	font-size: 10px;
+	color: #fff;
+	padding: 1px 3px;
+	background-color: #ccc;
+}
+#dlist table tbody tr td span.pr0 {
+	background-color: #bbb;
+}
+#dlist table tbody tr td span.pr1 {
+	background-color: #f00;
+}
+#dlist table tbody tr td span.pr2 {
+	background-color: #f63;
+}
+#dlist table tbody tr td span.pr3 {
+	background-color: #c69;
+}
+#dlist table tbody tr td span.pr4 {
+	background-color: #96c;
+}
+#dlist table tbody tr td span.pr5 {
+	background-color: #69c;
+}
+#dlist table tbody tr td span.pr6 {
+	background-color: #7ac;
+}
+#dlist table tbody tr td span.pr6 {
+	background-color: #8bc;
+}
+#dlist table tbody tr td span.pr7 {
+	background-color: #acc;
+}
+#dlist table tbody tr td span.pr8 {
+	background-color: #bcc;
+}
+#dlist table tbody tr td span.pr9 {
+	background-color: #ccc;
+}
+#dlist table tbody tr.future td span.prio {
+	background-color: #ccc;
+}
+#dlist table tbody tr.overdue td span.prio {
+	background-color: #f00;
+}
+/* links */
+#dlist table tbody tr td a {
+	color: inherit;
+	text-decoration: none;
+}
+#dlist table tbody tr td a:hover {
+	text-decoration: underline;
+}
+#dlist table tbody tr td a.onhold {
+	display: none;
+	float: right;
+	background-image: url(../img/b-edit.png);
+	width: 16px;
+	height: 16px;
+	text-align: left;
+	text-indent: -9999px;
+}
+#dlist table tbody tr td a.onlock {
+	display: none;
+}
+#dlist table tbody tr td a.clock {
+	float: left;
+	background-image: url(../img/b-run.png);
+}
+#dlist table tbody tr td a.note {
+	padding-right: 20px;
+	background: url(../img/b-note.png) no-repeat right center;
+}
+/* hover */
+#dlist table tbody tr:hover td {
+	background-color: #fec;
+}
+#dlist table tbody tr:hover td a.onhold {
+	display: block;
+}
+#dlist table tbody tr.current:hover td a.clock {
+	display: none;
+}
+#dlist table tbody tr.current:hover td {
+	background-color: #9cf;
+}
+/* footer */
+#dlist table tfoot tr td {
+	background-color: #ddd;
+	font-weight: bold;
+	text-align: right;
+}
+#dlist table tfoot tr td:first-child {
+	text-align: left;
+}
+#dlist table tfoot tr td a {
+	font-weight: normal;
+}
+/* buttons */
+span.button, span.button a {
+	color: #333;
+	font-size: 12px;
+	line-height: 1.5em;
+	text-decoration: none;
+	padding: 5px 0;
+	background-repeat: no-repeat;
+}
+span.button {
+	padding-left: 30px;
+	background-position: left center;
+}
+span.button a {
+	padding-right: 10px;
+	background-position: right center;
+}
+span.button a:hover {
+	color: #fff;
+}
+span.new, span.new a {
+	background-image: url('../img/b-new.png');
+}
+span a.new {
+	display: block;
+	width: 24px;
+	height: 24px;
+	text-indent: -9999px;
+	background: url('../img/b-new.png') no-repeat left center;
+	float: left;
+}
+span a.multi {
+	margin-left: 6px;
+	background-position: -24px center;
+}
+span a.reload {
+	margin-left: 6px;
+	background-position: -48px center;
+}
+p.empty {
+	padding: 20px 0 0;
+	text-align: center;
+}

@@ -1,0 +1,250 @@
+html, body, div, h1, h2, h3, h4, h5, h6, ul, ol, dl, li, dt, dd, p, blockquote,
+pre, form, fieldset, table, th, td, hr {
+	margin: 0;
+	padding: 0;
+}
+html {
+	height: 100%;
+}
+body {
+	height: 100%;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	min-width: 960px;
+	background: #f3f3f3;
+}
+#global {
+	position: relative;
+	top: 0;
+	min-height: 100%;
+}
+* html #global {
+	height: 100%;
+}
+h1 {
+}
+h2 {
+}
+h3 {
+}
+p {
+	padding-bottom: 9px;
+}
+ul, ol {
+	padding: 0 0 5px 25px;
+}
+ul ul, ol ol {
+	padding: 0 0 5px 15px;
+}
+ul li {
+	padding: 2px 0 3px 0;
+}
+ol li {
+	padding: 2px 0 3px 0;
+}
+a img {
+	border: 0 none;
+}
+:focus, a, a:active {
+	outline: 0 none;
+}
+/* alignment */
+.lft {
+	text-align: left;
+}
+.ctr {
+	text-align: center;
+}
+.rgt {
+	text-align: right;
+}
+.jty {
+	text-align: justify;
+}
+/* floating */
+.flft {
+	float: left;
+}
+.frgt {
+	float: right;
+}
+.clft {
+	clear: left;
+}
+.crgt {
+	clear: right;
+}
+img.flft {
+	margin-right: 6px;
+}
+img.frgt {
+	margin-left: 6px;
+}
+/* header */
+#dtop {
+	background: #1f87bb url(../img/top-back.png) repeat-x 0 bottom;
+	color: #fff;
+	height: 40px;
+}
+#dtop a {
+	color: #fff;
+	text-decoration: underline;
+}
+#dtop a:hover {
+	color: #000;
+}
+#dtop h1 {
+	float: left;
+	height: 40px;
+	margin-right: 20px;
+	width: 150px;
+}
+#dtop h1 a {
+	background: url(../img/logo.png) no-repeat;
+	display: block;
+	height: 40px;
+	text-indent: -999px;
+	width: 150px;
+}
+#dtop #duser {
+	float: right;
+	line-height: 1.125em;
+	padding: 4px 8px;
+	text-align: right;
+	width: 150px;
+}
+#dtop form#search {
+	float: right;
+	padding: 16px 30px 0 0;
+}
+#dtop form#search input {
+	background: url(../img/top-search.png) no-repeat left center;
+	border: 0 none;
+	color: #069;
+	float: left;
+	font-size: 10px;
+	padding: 3px 0 3px 4px;
+	width: 76px;
+	height: 10px;
+}
+#dtop form#search button {
+	background: url(../img/top-search.png) no-repeat right center;
+	border: 0 none;
+	padding: 0;
+	width: 20px;
+	height: 16px;
+	text-indent: -9999px;
+}
+#dtop ul {
+	padding: 12px 0 0 0;
+	height: 28px;
+}
+#dtop ul li {
+	float: left;
+	list-style: none;
+	margin-right: 8px;
+	padding: 0 0 8px 10px;
+	height: 20px;
+}
+#dtop ul li.active {
+	background: url(../img/top-tab.png) no-repeat left 0;
+}
+#dtop ul li a {
+	display: block;
+	color: #fff;
+	text-decoration: none;
+	padding: 6px 10px 0 0;
+}
+#dtop ul li a:hover {
+}
+#dtop ul li.active a {
+	color: #000;
+	background: url(../img/top-tab.png) no-repeat right 0;
+}
+/* working area */
+#dwork {
+	padding-top: 10px;
+	padding-bottom: 50px;
+}
+/* layout : 1 column */
+#dmain.full {
+	margin: 0 1%;
+}
+/* layout : 2 columns */
+#dmain.two, #dmain.three {
+	margin-left: 135px;
+}
+#dleft {
+	float: left;
+	width: 110px;
+	overflow: hidden;
+	padding: 50px 10px 0 10px;
+}
+#dleft h4 {
+	color: #333;
+	font-size: 11px;
+	border-bottom: 1px solid #666;
+	padding-left: 4px;
+	margin: 5px 0 5px;
+}
+#dmain.three #dlist {
+	margin-right: 250px;
+}
+/* right panel (calendar) */
+#dright {
+	float: right;
+	width: 220px;
+	padding-right: 15px;
+	background-color: aqua;
+}
+/* footer */
+#dfoot {
+	background: #3298cb url(../img/bot-back.png) repeat-x 0 top;
+	font-size: 11px;
+	color: #fff;
+	height: 16px;
+	margin-top: -22px;
+	padding: 3px 10px;
+	position: relative;
+}
+#dfoot a {
+	color: #fff;
+}
+#dfoot.exp {
+	margin-top: -306px;
+	height: 300px;
+}
+#dfoot #dcopy {
+	float: right;
+	font-size: 10px;
+}
+#dfoot #dcopy a {
+	background: url(../img/bot-logo.png);
+	display: block;
+	float: left;
+	height: 16px;
+	text-indent: -9999px;
+	width: 70px;
+}
+#dfoot #dcopy span {
+	vertical-align: bottom;
+	font-size: 9px;
+}
+hr.clear {
+	clear: left;
+	border: 0 none;
+	height: 0;
+	visibility: hidden;
+}
+hr.sep {
+	clear: right;
+	border: 0 none;
+	height: 8px;
+	visibility: hidden;
+}
+hr.separator {
+	padding-bottom: 10px;
+}
+hr.footer {
+	padding-bottom: 40px;
+}
