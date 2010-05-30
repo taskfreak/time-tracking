@@ -4,7 +4,7 @@
  * 
  * @package tzn_core_classes
  * @author Stan Ozier <framework@tirzen.com>
- * @version 0.2
+ * @version 0.3
  * @copyright GNU Lesser General Public License (LGPL) version 3
  */
 
@@ -12,7 +12,7 @@
  * Model
  * 
  * The mother class of all models
-	* @since 0.1
+ * @since 0.1
  */
 abstract class Model extends Pluginable {
 

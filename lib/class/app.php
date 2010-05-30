@@ -4,7 +4,7 @@
  * 
  * @package tzn_core_classes
  * @author Stan Ozier <framework@tirzen.com>
- * @version 0.2
+ * @version 0.3
  * @copyright GNU Lesser General Public License (LGPL) version 3
  */
 

@@ -4,7 +4,7 @@
  *
  * @package taskfreak_tt
  * @author Stan Ozier <taskfreak@gmail.com>
- * @version 0.2
+ * @version 0.3
  * @copyright GNU General Public License (GPL) version 3
  */
  
