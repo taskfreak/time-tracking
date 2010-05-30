@@ -1,0 +1,22 @@
+Version 0.3 : 2010-05-30
+------------------------
+Fixed subfolder installation (virtual host no longer required)
+Added customization option for number of items to be shown (pagination)
+Added order results by column (deadline, priority, start time, etc...)
+Added jdpicker (javascript calendar on date fields)
+Improved time and duration input controls
+Improved search box design
+Improved new/edit task submit (checks form before sending data to server)
+Improved server actions message reports
+Fixed magic quotes (gpc) compatibility
+Other minor bug fixes
+
+
+Version 0.2 : 2010-05-21
+------------------------
+Added simple multi user support
+
+
+Version 0.1 : 2010-05-11
+-------------------------
+Single user experimental version
