@@ -192,9 +192,14 @@ class HtmlFormHelper extends Helper {
 	 * generates date field
 	 * @todo real date field
 	 */
-	public function iDate() {
-		$args = func_get_args();
-		return call_user_func_array(array($this,'iText'),$args);
+	public function iDate($key) {
+		$str = '<input type="text" id="i_'.$key.'" name="'.$key.'" value="'
+			.$this->_value($key)
+			.'" class="date" />';
+		if ($err = $this->_htmlError($key)) {
+			$str .= $err;
+		}
+		return $str;
 	}
 	/**
 	 * generates date time field

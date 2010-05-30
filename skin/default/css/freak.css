@@ -113,28 +113,6 @@ img.frgt {
 	text-align: right;
 	width: 150px;
 }
-#dtop form#search {
-	float: right;
-	padding: 16px 30px 0 0;
-}
-#dtop form#search input {
-	background: url(../img/top-search.png) no-repeat left center;
-	border: 0 none;
-	color: #069;
-	float: left;
-	font-size: 10px;
-	padding: 3px 0 3px 4px;
-	width: 76px;
-	height: 10px;
-}
-#dtop form#search button {
-	background: url(../img/top-search.png) no-repeat right center;
-	border: 0 none;
-	padding: 0;
-	width: 20px;
-	height: 16px;
-	text-indent: -9999px;
-}
 #dtop ul {
 	padding: 12px 0 0 0;
 	height: 28px;
@@ -160,6 +138,42 @@ img.frgt {
 #dtop ul li.active a {
 	color: #000;
 	background: url(../img/top-tab.png) no-repeat right 0;
+}
+/* search form */
+form#search p {
+	padding: 2px 0 7px;
+	line-height: 1em;
+}
+form#search p input {
+	width: 140px;
+	height: 12px;
+	padding: 3px 10px 3px 20px;
+	line-height: 12px;
+	font-size: 11px;
+	color: #333;
+	border: 0 none;
+	background: transparent url(../img/search.png) no-repeat left top;
+}
+form#search.filled p input {
+	background-position: left -22px;
+}
+form#search p button {
+	position: relative;
+	top: 2px;
+	width: 15px;
+	height: 16px;
+	padding: 0;
+	margin: 0;
+	line-height: 16px;
+	text-indent: -9999px;
+	background: transparent;
+	border: 0 none;
+}
+form#search p button#b_submit {
+	left: -170px;
+}
+form#search p button#b_clear {
+	left: -42px;
 }
 /* working area */
 #dwork {
@@ -190,12 +204,196 @@ img.frgt {
 #dmain.three #dlist {
 	margin-right: 250px;
 }
-/* right panel (calendar) */
-#dright {
+/* calendar */
+.jdpicker_w .date_selector * {
+	width: auto;
+	height: auto;
+	border: none;
+	background: none;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	text-decoration: none;
+	font-size:11px;
+}
+.jdpicker_w .date_selector {
+	background: #FFF;
+	border: 1px solid #bbb;
+	padding: 3px;
+	margin: -1px 0 0 0;
+	position: absolute;
+	z-index: 100000;
+	display: none;
+	width:180px
+}
+
+.jdpicker_w .date_selector table{
+	width:180px;
+	margin-left:3px;
+}
+
+.jdpicker_w .date_clearer{
+	color: #a00;
+	padding-left:3px;
+	cursor:pointer;
+	font-weight:bold;
+	font-family:sans-serif
+}
+
+.jdpicker_w .date_selector_ieframe {
+	position: absolute;
+	z-index: 99999;
+	display: none;
+}
+
+.jdpicker_w .error_msg{
+	display:none;
+	text-align:center;
+	font-size:0.8em;
+	color:#666
+}
+
+.jdpicker_w .date_selector .nav {
+	width: 180px;
+}
+.jdpicker_w .date_selector .month_nav, .jdpicker_w .date_selector .year_nav {
+	margin: 0 0 3px 0;
+	padding: 0;
+	display: block;
+	position: relative;
+	text-align: center;
+}
+.jdpicker_w .date_selector .month_nav {
+	float: left;
+	width: 56%;
+}
+.jdpicker_w .date_selector .year_nav {
 	float: right;
-	width: 220px;
-	padding-right: 15px;
-	background-color: aqua;
+	width: 40%;
+	position:relative;
+}
+
+.jdpicker_w .date_selector .month_nav select {
+	width:60px;
+	margin: 0 auto;
+	border:1px solid #ccc;
+	position:relative;
+	top:1px
+}
+
+.jdpicker_w .date_selector .year_nav .year_input {
+	text-align:center;
+	width:30px;
+	border:1px solid #ccc;
+	position:relative;
+	top:2px
+}  
+
+.jdpicker_w .date_selector .month_name, .jdpicker_w .date_selector .year_name {
+	font-weight: normal;
+	line-height: 18px;
+}
+.jdpicker_w .date_selector .button {
+	display: block;
+	position: absolute;
+	top: 0;
+	width: 16px;
+	height: 16px;
+	line-height: 16px;
+	font-weight: bold;
+	text-align: center;
+	font-size: 120%;
+	overflow: hidden;
+	cursor:pointer;
+	color: #369;
+}
+
+.jdpicker_w .date_selector .button:hover, .jdpicker_w .date_selector .button.hover {
+	background: #69c;
+	color: #fff !important;
+	cursor: pointer;
+}
+
+.jdpicker_w .date_selector .prev {
+	left: 0;
+}
+.jdpicker_w .date_selector .next {
+	right: 0;
+}
+
+.jdpicker_w .date_selector table {
+	margin:0 auto;
+	clear: both;
+	border-collapse: collapse;
+}
+.jdpicker_w .date_selector th {
+	padding-top: 5px;
+	padding-bottom: 4px;
+	font-weight: normal;
+}
+
+.jdpicker_w .date_selector th, .jdpicker_w .date_selector td {
+	text-align: center;
+	color: black;
+}
+
+.jdpicker_w .date_selector th.week_label{
+	font-weight:normal;
+	font-style:italic;
+	font-size:80%;
+	width:20px
+}
+
+.jdpicker_w .date_selector .week_num, .jdpicker_w .date_selector .hover .week_num, .jdpicker_w .date_selector .selected .week_num{
+	font-style:italic;
+	color:#333 !important;
+	vertical-align:bottom !important;
+	text-align:right;
+	border:none !important;
+	font-size:70%;
+	background:#FCFCFC;
+	padding-right:4px;
+}
+.jdpicker_w .date_selector td {
+	border: 1px solid #ccc;
+	line-height: 2em;
+	text-align: center;
+	white-space: nowrap;
+	color: #003C78;
+	background: white;
+}
+.jdpicker_w .date_selector td.today {
+	background-color: #fc3;
+}
+.jdpicker_w .date_selector td.unselected_month {
+	color: #ccc;
+}
+.jdpicker_w .date_selector td.selectable_day, .jdpicker_w .date_selector tr.selectable_week td {
+	cursor: pointer;
+	border:1px solid #aaa;
+	color:#333
+}
+.jdpicker_w .date_selector td.selected, .jdpicker_w .date_selector tr.selected  td{
+	background-color: #369;
+	color: #fff;
+}
+.jdpicker_w .date_selector tr.selectable_week.hover td, .jdpicker_w .date_selector td.selectable_day.hover {
+	color: #fff;
+	background-color: #69c;
+}
+/* system message */
+span#message {
+	padding: 0px 5px 1px;
+}
+span#message.message {
+	color: #069;
+	font-weight: bold;
+	background-color: #ff9;
+}
+span#message.error {
+	color: #000;
+	font-weight: bold;
+	background-color: #f99;
 }
 /* footer */
 #dfoot {

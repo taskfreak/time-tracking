@@ -21,7 +21,7 @@ $this->incView('include/page-top', false);
 		</ul>
 		<ul class="links horiz">
 			<?php
-			$arr = array('10'=>10,'25'=>25,'50'=>50,'all'=>0);
+			$arr = $GLOBALS['config']['task']['pagination'];
 			foreach($arr as $lbl => $val) {
 				echo '<li';
 				if ($this->limit == $val) {

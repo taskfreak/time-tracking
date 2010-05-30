@@ -1,7 +1,7 @@
 <?php
 $this->incView('include/page-top', false);
 ?>
-<form action="/login" method="post">
+<form action="<?php echo $this->fc->getUrl('login'); ?>" method="post">
 	<?php
 	if ($str = $this->fc->user->getAuthError()) {
 		echo '<p>Can not login: '.VarStr::html($str).'</p>';

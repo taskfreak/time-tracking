@@ -201,7 +201,7 @@ class FrontController extends HelpableSingleton {
 				try {
 					throw new AppException('Controller '.$this->controller.' not defined in '.implode(', ', $this->autoPath['controller']));
 				} catch(Exception $e) {
-					error_log('error loading controller '.$this->controller);
+					self::log_debug('error loading controller '.$this->controller);
 					echo $e;
 					exit;
 				}
@@ -248,9 +248,11 @@ class FrontController extends HelpableSingleton {
 			return true;
 		}
 		$arrReq = array('_POST','_GET','_REQUEST');
-		foreach ($arrReq as $key) {
-			if (isset($$key)) {
-				array_walk($$key, 'stripslashes');
+		foreach ($arrReq as $var) {
+			if (count($GLOBALS[$var])) {
+				foreach($GLOBALS[$var] as $key => $val) {
+					$GLOBALS[$var][$key] = stripslashes($val);
+				}
 			}
 		}
 		return true;
@@ -291,13 +293,20 @@ class FrontController extends HelpableSingleton {
 		// clean ugly magic quotes
 		self::cleanRequest();
 		
-		// parse URL path
-		$req = trim($_SERVER['REQUEST_URI'],'/');
+		$req = $_SERVER['REQUEST_URI'];
+		
+		// remove subfolder setup if non virtual host
+		if (strlen(APP_WWW_URI) > 1) {
+			$req = str_ireplace(APP_WWW_URI,'',$req);
+		}
+		// remove trailing slashes
+		$req = trim($req,'/');
+		// parse if non empty
 		if ($req) {
-			if ($pos = strrpos($_SERVER['REQUEST_URI'],'.html')) {
-				$req = substr($req, 0, $pos-1);
-			} else if ($pos = strrpos($_SERVER['REQUEST_URI'],'?')) {
-				$req = substr($req, 0, $pos-1);
+			if ($pos = strrpos($req,'.html')) {
+				$req = substr($req, 0, $pos);
+			} else if ($pos = strrpos($req,'?')) {
+				$req = substr($req, 0, $pos);
 			}
 			$arrReq = explode('/',$req);
 			if (count($arrReq)) {
@@ -324,10 +333,10 @@ class FrontController extends HelpableSingleton {
 		if (count($_REQUEST)) {
 			foreach($_REQUEST as $key => $val) {
 				switch($key) {
-				case 'controller' :
+				case 'c' :
 					$this->controller = $val;
 					break;
-				case 'action' :
+				case 'a' :
 					$this->action = $val;
 					break;
 				default :
@@ -346,17 +355,33 @@ class FrontController extends HelpableSingleton {
 	 * generate URL
 	 */
 	public static function getUrl($controller='', $action = '', $params = '') {
+		$url = APP_WWW_URI;
+		
 		if (!$controller) {
-			return APP_WWW_URI;
+			return $url;
 		}		
-		if (!$action) {
-			return APP_WWW_URI.$controller;
+		
+		if (@constant('APP_URL_REWRITE')) {
+			$url .= StringHelper::camelToFlat($controller,'-');
+			if ($action) {
+				$url .= '/'.StringHelper::camelToFlat($action,'-');
+			}
+		} else {
+			$url .= 'index.php?c='.StringHelper::camelToFlat($controller,'-');
+			if ($action) {
+				$url .= '&a='.StringHelper::camelToFlat($action,'-');
+			}
 		}
-		$url = APP_WWW_URI.StringHelper::camelToFlat($controller,'-')
-			.'/'.StringHelper::camelToFlat($action,'-');
+		
 		if (is_array($params)) {
-			foreach ($params as $key => $val) {
-				$url .= '/'.urlencode($key).'/'.urlencode($val);
+			if (@constant('APP_URL_REWRITE')) {
+				foreach ($params as $key => $val) {
+					$url .= '/'.urlencode($key).'/'.urlencode($val);
+				}
+			} else {
+				foreach ($params as $key => $val) {
+					$url .= '&'.urlencode($key).'='.urlencode($val);
+				}
 			}
 		}
 		return $url;

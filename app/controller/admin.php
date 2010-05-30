@@ -19,7 +19,7 @@ class Admin extends AppController {
 	public function __construct() {
 		parent::__construct(true);
 		
-		$this->fc->setSessionDefault('userlimit',10);
+		$this->fc->setSessionDefault('userlimit',$GLOBALS['config']['task']['pagination_default']);
 		
 		if ($this->fc->getReqVar('ajax')) {
 			$this->page->clean('css');

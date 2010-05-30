@@ -105,8 +105,14 @@ class HtmlAssetHelper extends Collectable {
 		// xml/rss
         if (count($this->rss)) {
 			foreach($this->rss as $it) {
-				echo '<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="'
-					.CMS_WWW_URL.$it.'" />'."\n";
+				$title = 'RSS feed';
+				$url = $it;
+				if ($idx = strpos($it, '|')) {
+					$url = substr($it, 0, $idx);
+					$title = substr($it, $idx+1);
+				}
+				echo '<link rel="alternate" type="application/rss+xml" title="'.$title.'" href="'
+					.APP_WWW_URL.$url.'" />'."\n";
 			}
 		}
 		

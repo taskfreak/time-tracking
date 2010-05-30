@@ -60,19 +60,6 @@ ul.links li.active a, p.links a.active  {
 #dfilters span {
 	float: right;
 }
-#dfilters form input {
-	padding: 1px 4px;
-	border: 1px solid #333;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-}
-#dfilters form input:focus {
-	background-color: #ffc;
-}
-#dfilters form button {
-	padding: 1px 2px;
-}
 /* main panel (list) */
 #dlist {
 	background: #fff;
@@ -101,6 +88,17 @@ ul.links li.active a, p.links a.active  {
 	color: #fff;
 	border-top: 1px solid #bbb;
 	border-bottom: 1px solid #999;
+}
+#dlist table thead th a {
+	color: #fff;
+	text-decoration: none;
+}
+#dlist table thead th.active a {
+	padding-right: 15px;
+	background: url(../img/order.png) no-repeat right top;
+}
+#dlist table thead th:hover {
+	background-color: #888;
 }
 #dlist table thead th small {
 	padding-top: 2px;

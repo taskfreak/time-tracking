@@ -38,7 +38,7 @@ abstract class AppController extends Pluginable {
 		// check login ?
 		if ($login && APP_SETUP_USER_MODEL) {
 			if (!$this->fc->user->isLoggedIn()) {
-				NaviHelper::redirect('/login');
+				NaviHelper::redirect($this->fc->getUrl('login'));
 			}
 		}
 	}
@@ -52,12 +52,18 @@ abstract class AppController extends Pluginable {
 	
 	/**
 	 * dispatch controller's action view
+	 * @todo if ajaxed, no full header and all
 	 * @todo search in other folders, such as plugins
 	 */
 	protected function view() {
 		$this->page->dispatchHeader();
 		include APP_VIEW_PATH.$this->view.'.php';
 		$this->page->dispatchFooter();
+	}
+	
+	protected function viewXml($encoding='UTF-8') {
+		echo '<'.'?xml version="1.0" encoding="'.$encoding.'"?'.">\n";
+		include APP_VIEW_PATH.$this->view.'.php';
 	}
 	
 	/**

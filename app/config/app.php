@@ -3,8 +3,8 @@
 // ---- LOG and DEBUGGING -----------------------------------------------------
 
 $GLOBALS['config']['log_front'] = 0;
-$GLOBALS['config']['log_debug'] = 0;
-$GLOBALS['config']['log_message'] = 0;
+$GLOBALS['config']['log_debug'] = 1;
+$GLOBALS['config']['log_message'] = 1;
 $GLOBALS['config']['log_warn'] = 0;
 $GLOBALS['config']['log_error'] = 1;
 $GLOBALS['config']['log_core'] = 0;
@@ -70,6 +70,9 @@ $GLOBALS['config']['task']['priority'] = array(
 	),
 	'default'	=> 5
 );
+
+$GLOBALS['config']['task']['pagination'] = array('15'=>15,'25'=>25,'50'=>50,'all'=>0);
+$GLOBALS['config']['task']['pagination_default'] = 15;
 
 // ---- DEFAULT Javascript ----------------------------------------------------
 

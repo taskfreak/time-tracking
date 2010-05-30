@@ -1,15 +1,16 @@
+var RELOAD_URI='/task/main/ajax/1';
 var AUTORELOAD=300000;
 var AUTODELAY=60000;
+var AUTOHIDE=2500;
 var arelc=0;
 var alive;
 var timer;
 var watch;
 
 function reloadList() {
-	// console.log('reloading list...');
 	stopAlive();
 	jQuery.ajax({
-		url: "/task/main/ajax/1",
+		url: RELOAD_URI,
 		type: "get",
 		dataType: "html",
 		success: function(html){
@@ -22,10 +23,10 @@ function reloadList() {
 		}
    });
 }
-
+/*
 function reloadTimers(id) {
 	jQuery.ajax({
-		url: "/timer/main/id/"+id+"/ajax/1",
+		url: URI+"timer/main/id/"+id+"/ajax/1",
 		type: "get",
 		dataType: "html",
 		success: function(html){
@@ -33,7 +34,7 @@ function reloadTimers(id) {
 		}
 	});
 }
-
+*/
 function checkAll(id) {
 	$('#'+id+' input:checkbox').attr("checked", "checked");
 }
@@ -111,10 +112,26 @@ $(document).ready(function(){
     $(document).bind('cbox_complete', function(){
 		$('#cboxLoadedContent :input').not(':hidden').first().focus();
 	});
+	
+	// get reload URI
+	el = $('.reload').first();
+	RELOAD_URI = el.attr('href');
+	el.attr('href','javascript:reloadList()');
     
     // reload task list every 5 minutes
     startAlive(AUTORELOAD);
+    
+    // check server action report, and clean within a few seconds
+    if ($('#message.message')[0] || $('#message.error')[0]) {
+    	window.setTimeout('cleanMessage()',AUTOHIDE);
+    }
 });
+
+function cleanMessage() {
+	$('#message').fadeOut('slow', function() {
+    	$(this).removeClass('message error').html('...').fadeIn();
+    });
+}
 
 function startAlive(d) {
 	if ($('#dlist.tasks')[0]) {
@@ -199,7 +216,7 @@ jQuery.fn.ajaxify = function(target) {
 			e.preventDefault();
 			el = $(this);
 			if (el.hasClass('confirm')) {
-				if (!confirm('Really delete this task ?')) {
+				if (!confirm('Really delete this item ?')) {
 					return false;
 				}
 			}
@@ -246,8 +263,8 @@ jQuery.fn.wTip = function() {
 	           	} else {
 	    	        this.left = (e.pageX + xOffset);
 	    	    }
-	            $("body").append( '<p id="vtip"'+((inv)?' class="inv"':'')+'><img id="vtipArrow" />' + this.t + '</p>' );           	            
-	            $('p#vtip #vtipArrow').attr("src", '/asset/img/vtip_arrow.png');
+	            $("body").append( '<p id="vtip"'+((inv)?' class="inv"':'')+'><span id="vtipArrow">&nbsp;</span>' + this.t + '</p>' );           	            
+	            // $('p#vtip #vtipArrow').attr("src", '/asset/img/vtip_arrow.png');
 	            $('p#vtip').css("top", this.top+"px").css("left", this.left+"px").fadeIn("slow");
 	        },
 	        function() {

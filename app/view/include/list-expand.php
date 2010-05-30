@@ -22,14 +22,24 @@ if ($this->data->count()) {
 	<thead>
 		<tr>
 			<th>&nbsp;</th>
-			<th>deadline</th>
-			<th>
+			<th<?php
+				if ($this->order == 'deadline') echo ' class="active"';
+			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'deadline')); ?>">deadline</a></th>
+			<th<?php
+				if ($this->order == 'priority') echo ' class="active"';
+			?>>
 				<small><?php echo count($arrData); ?> item(s) found</small>
-				task
+				<a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'priority')); ?>">task</a>
 			</th>
-			<th>start</th>
-			<th>stop</th>
-			<th>spent</th>
+			<th<?php
+				if ($this->order == 'start') echo ' class="active"';
+			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'start')); ?>">start</a></th>
+			<th<?php
+				if ($this->order == 'stop') echo ' class="active"';
+			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'stop')); ?>">stop</a></th>
+			<th<?php
+				if ($this->order == 'spent') echo ' class="active"';
+			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'spent')); ?>">spent</a></th>
 		</tr>
 	</thead>
 	<tbody>

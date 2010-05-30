@@ -54,10 +54,11 @@ $('#f_task_timer').ajaxForm({
 	target:	'#f_task_timer',
 	data: {'ajax':'1'}
 });
-// $.getScript('/asset/js/jquery.dateentry.pack.js');
-// $.getScript('/asset/js/jquery.timeentry.pack.js');
 </script>
+<?php /*
 <script type="text/javascript" src="<?php echo APP_WWW_URI.'asset/js/jquery.dateentry.pack.js'; ?>"></script>
+*/ ?>
+<script type="text/javascript" src="<?php echo APP_WWW_URI.'asset/js/jquery.jdpicker.js'; ?>"></script>
 <script type="text/javascript" src="<?php echo APP_WWW_URI.'asset/js/jquery.timeentry.pack.js'; ?>"></script>
 <?php
 

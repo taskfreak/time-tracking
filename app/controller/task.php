@@ -19,7 +19,8 @@ class Task extends AppController {
 	public function __construct() {
 		parent::__construct(true);
 		
-		$this->fc->setSessionDefault('limit',10);
+		$this->fc->setSessionDefault('order','deadline');
+		$this->fc->setSessionDefault('limit',$GLOBALS['config']['task']['pagination_default']);
 		if (APP_SETUP_USER_MODEL) {
 			$this->fc->setSessionDefault('switch_id',$this->fc->user->getUid());
 			$this->fc->setSessionDefault('switch_name',$this->fc->user->get('nickname'));
@@ -213,6 +214,7 @@ class Task extends AppController {
 	
 		$this->expand = $this->fc->sessionVariable('expand');
 		$this->search = $this->fc->sessionVariable('search');
+		$this->order = $this->fc->sessionVariable('order');
 		$this->limit = $this->fc->sessionVariable('limit');
 		
 		$this->data = new TaskSummary();
@@ -225,7 +227,22 @@ class Task extends AppController {
 			// user login enabled, filter by users
 			$this->data->where('member_id='.$this->switch_id);
 		}
-		$this->data->orderBy('deadline ASC, priority ASC, title ASC, start ASC');
+		switch ($this->order) {
+		case 'priority':
+			$this->data->orderBy('priority ASC, deadline ASC, title ASC, start ASC');
+			break;
+		case 'start':
+			$this->data->orderBy('start ASC, deadline ASC, priority ASC, title ASC');
+			break;
+		case 'stop':
+			$this->data->orderBy('stop ASC, start ASC, deadline ASC, priority ASC, title ASC');
+			break;
+		case 'spent':
+			$this->data->orderBy('spent ASC, start ASC');
+		default:
+			$this->data->orderBy('deadline ASC, priority ASC, title ASC, start ASC');
+			break;	
+		}
 		if ($this->expand) {
 			$this->limit = 0;
 			$this->data->loadExpandList();
@@ -288,7 +305,7 @@ class Task extends AppController {
 				}
 			}
 		}
-		$this->fc->redirect('/task/main',$i.' task(s) created !');
+		$this->fc->redirect(APP_WWW_URI.'task/main',$i.' task(s) created !');
 	}
 	
 	public function editAction() {
@@ -301,12 +318,12 @@ class Task extends AppController {
 	}
 	
 	public function editReaction() {
-		$this->_loadTask();
+		$id = $this->_loadTask();
 		$this->data->ignore('creation_date'); // do not submit or change creation date
 		$this->data->set($this->fc->request);
 		if ($this->data->check($this->switch_id)) {
 			$this->data->save();
-			$this->fc->redirect(APP_WWW_URI,'task_created');
+			$this->fc->redirect(APP_WWW_URI,($id)?'task_updated':'task_created');
 		}
 		return true; // show action again
 	}

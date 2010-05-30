@@ -36,13 +36,19 @@ ol.fields li.compulsory label {
 	/* color: #600; */
 	background: transparent url(../img/compulsory.png) no-repeat right top;
 }
+ol.fields li.error label {
+	color: #600;
+}
+ol.fields li.error input {
+	background-color: #fcc;
+}
 ol.fields li span, ol.fields li small.nline {
 	padding: 2px 0 0 4px;
 }
 ol.fields li span.ui-icon {
 	padding: 0;
 }
-ol.side li span, ol.side li small.nline {
+ol.side li .nline {
 	display: block;
 	margin-left: 120px;
 }
@@ -88,11 +94,13 @@ ol.side li strong {
 	display: block;
 	padding-left: 124px;
 }
+ol li span.error {
+	font-size: .917em;
+	color: #900;
+}
 ol.side li span.error {
 	display: block;
 	/* padding-left: 124px; */
-	font-size: .917em;
-	color: #900;
 }
 /* fields */
 input, textarea, option {

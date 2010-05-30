@@ -35,6 +35,8 @@
 	margin: 0;
 	padding: 0;
 	line-height: 1.75em;
+	height: 2em;
+	overflow: hidden;
 }
 #drun p input {
 	color: #036;
@@ -131,9 +133,12 @@ p#vtip {
 	z-index: 9999;
 }
 p#vtip #vtipArrow { 
+	background: url(../img/vtip_arrow.png) no-repeat;
 	position: absolute;
 	top: -10px; 
 	left: 5px;
+	height: 11px;
+	width: 21px;
 }
 p#vtip.inv {
 	max-width: 50px;

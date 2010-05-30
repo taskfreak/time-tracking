@@ -89,7 +89,7 @@ class Timer extends AppController {
 		$start = $this->fc->getReqVar('start');
 		
 		if (empty($id) || empty($start)) {
-			$this->fc->redirect(CMS_WWW_URI,'ERROR:missing parameters');
+			$this->fc->redirect(APP_WWW_URI,'ERROR:missing parameters');
 		}
 	
 		// delete timer
@@ -115,7 +115,7 @@ class Timer extends AppController {
 				echo "reloadList();";
 				echo '</script>';
 			} else {
-				$this->fc->redirect(CMS_WWW_URI,'Timer deleted');
+				$this->fc->redirect(APP_WWW_URI,'Timer deleted');
 			}
 		} else {
 			// error deleting
@@ -124,7 +124,7 @@ class Timer extends AppController {
 				echo 'alert("can not delete timer");';
 				echo '</script>';
 			} else {
-				$this->fc->redirect(CMS_WWW_URI,'Timer NOT deleted');
+				$this->fc->redirect(APP_WWW_URI,'Timer NOT deleted');
 			}
 		}
 		

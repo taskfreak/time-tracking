@@ -1,21 +1,20 @@
 <?php
 if (isset($this->current)) {
-?>
-<form id="drun" action="/task/timer"<?php
+
+	echo '<form id="drun" action="'.$this->fc->getUrl('task','timer').'"';
 	if ($this->current) {
 		echo ' class="running"';
 	}
-	?> method="post">
-	<?php
+	echo ' method="post">';
+
 	$this->incView('include/timer');
-	?>
-</form>
-<?php
+	
+	echo '</form>';
 }
 ?>
 <div id="global">
 	<div id="dtop">
-		<h1><a href="/">TaskFreak</a></h1>
+		<h1><a href="<?php echo APP_WWW_URI; ?>">TaskFreak</a></h1>
 		<div id="duser">
 		<?php
 		if (APP_SETUP_USER_MODEL && $this->fc->user->isLoggedIn()) {
@@ -25,14 +24,14 @@ if (isset($this->current)) {
 			}
 			echo '<br /><small>';
 			if ($this->fc->user->checkAcl('task_see_all')) {
-				echo '<a href="'.APP_WWW_URI.'admin/switch" class="ajax box">switch</a> | ';
+				echo '<a href="'.$this->fc->getUrl('admin','switch').'" class="ajax box">switch</a> | ';
 			}
 			if ($this->fc->user->checkAcl('admin_user')) {
-				echo '<a href="'.APP_WWW_URI.'admin">admin</a> | ';
+				echo '<a href="'.$this->fc->getUrl('admin').'">admin</a> | ';
 			} else {
-				echo '<a href="'.APP_WWW_URI.'admin/edit" class="ajax box">profile</a> | ';
+				echo '<a href="'.$this->fc->getUrl('admin','edit').'" class="ajax box">profile</a> | ';
 			}
-			echo '<a href="'.APP_WWW_URI.'login/out">logout</a>';
+			echo '<a href="'.$this->fc->getUrl('login','out').'">logout</a>';
 			echo '</small>';
 		} else {
 			echo 'TaskFreak!<br /><small>Time Tracking</small>';

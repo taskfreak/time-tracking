@@ -9,7 +9,7 @@ $GLOBALS['config'] = array();
 define('APP_SETUP_DATABASE', true);
 
 // load global settings on startup (requires database)
-define('APP_SETUP_GLOBAL_SETTINGS', true);
+define('APP_SETUP_GLOBAL_SETTINGS', false);
 
 // load user settings on startup (requires database and auth)
 define('APP_SETUP_USER_SETTINGS', false);
@@ -76,12 +76,10 @@ define('APP_SKIN_PATH',APP_ROOT_PATH.'skin/');
 
 // ---- APPLICATION URLs ------------------------------------------------------
 
+define('APP_URL_REWRITE', true);
 define('APP_WWW_URI', '/');
+// define('APP_WWW_URI', '/taskfreak/');
 
-if (!defined('APP_WWW_URI')) {
-	define('APP_WWW_URI',preg_replace('/^\/admin/','',dirname($_SERVER['PHP_SELF']))
-		.(preg_match('/\/$/',dirname($_SERVER['PHP_SELF']))?'':'/'));
-}
 define('APP_WWW_URL','http://'.$_SERVER['SERVER_NAME'].APP_WWW_URI);
 
 // ---- USER and PASSWORD SETTINGS --------------------------------------------

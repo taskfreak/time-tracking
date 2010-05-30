@@ -4,9 +4,9 @@ $this->incView('include/page-top', false);
 <div id="dmain" class="full">
 	<div id="dfilters">
 		<span>
-			<a href="<?php echo $this->fc->getUrl('task/edit');?>" class="ajax box new inv" title="Create single task">Create task</a>
-			<a href="<?php echo $this->fc->getUrl('task/create');?>" class="ajax bigbox new multi inv" title="Create multiple tasks">Create multiple</a>
-			<a href="javascript:reloadList()" class="new reload inv" title="Reload list">Reload</a>
+			<a href="<?php echo $this->fc->getUrl('task','edit');?>" class="ajax box new inv" title="Create single task">Create task</a>
+			<a href="<?php echo $this->fc->getUrl('task','create');?>" class="ajax bigbox new multi inv" title="Create multiple tasks">Create multiple</a>
+			<a href="<?php echo $this->fc->getUrl('task','main',array('ajax'=>1)); ?>" class="new reload inv" title="Reload list">Reload</a>
 		</span>
 		<ul class="links horiz">
 			<?php
@@ -34,7 +34,7 @@ $this->incView('include/page-top', false);
 		</ul>
 		<ul class="links horiz">
 			<?php
-			$arr = array('10'=>10,'25'=>25,'50'=>50,'all'=>0);
+			$arr = $GLOBALS['config']['task']['pagination'];
 			foreach($arr as $lbl => $val) {
 				echo '<li';
 				if ($this->limit == $val) {
@@ -44,11 +44,13 @@ $this->incView('include/page-top', false);
 			}
 			?>
 		</ul>
-		<form id="search" action="<?php $this->fc->thisUrl(); ?>" method="get">
+		<form id="search" action="<?php echo $this->fc->thisUrl(); ?>" method="get"<?php
+			if ($this->search) { echo ' class="filled"'; }
+		?>>
 			<p>
 				<input type="text" name="search" value="<?php echo $this->search; ?>" tabindex="4" />
-				<button type="submit" name="go" value="1">search</button>
-				<button type="button" onclick="this.form.elements[0].value='';this.form.submit()">x</button>
+				<button id="b_submit" type="submit" name="go" value="1">search</button>
+				<button id="b_clear" type="button" onclick="this.form.elements[0].value='';this.form.submit()">x</button>
 			</p>
 		</form>
 	</div>

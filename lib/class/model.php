@@ -1068,7 +1068,7 @@ class VarTxt extends VarAbstract
 		if ($cut && $cut < strlen($val)) {
 			$val = substr($val,0,$cut).' [...]';
 		}
-		return nl2br(VarStr::specialchars($val));
+		return str_replace(array("\r\n", "\r", "\n"), "<br />", VarStr::specialchars($val));
 	}
 	
 	public static function value($val) {
@@ -1101,7 +1101,7 @@ class VarBbs extends VarAbstract
 			$val = preg_replace("/(?<!\")((http|ftp)+(s)?"
 				.":\/\/[^<>\s]+)/i", "<a href=\"\\0\" target=\"_blank\">\\0</a>", $val);
 		}
-		return nl2br(str_replace('"','&quot;',$val));
+		return str_replace(array("\r\n", "\r", "\n"), "<br />", str_replace('"','&quot;',$val));
 	}
 	
 	public static function value($val) {

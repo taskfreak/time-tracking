@@ -15,8 +15,12 @@ if (!$this->isEmpty('keywords')) {
 <meta name="keywords" content="<?php echo $this->html('keywords'); ?>" />
 <?php
 }
+
+if (file_exists(APP_WWW_PATH.'favicon.ico')) {
+	echo '<link rel="SHORTCUT ICON" href="'.APP_WWW_URI.'favicon.ico" />';
+}
+
+$this->callHelper('html_asset','headerStuff'); 
 ?>
-<link rel="SHORTCUT ICON" href="/favicon.ico" />
-<?php $this->callHelper('html_asset','headerStuff'); ?>
 </head>
 <body>

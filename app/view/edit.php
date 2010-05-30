@@ -7,7 +7,7 @@ echo $this->data->iHidden('id');
 ?>
 <ol class="fields multicol top">
 	<?php
-	echo $this->data->iFieldLabelled('title','','','li class="nline"');
+	echo $this->data->iFieldLabelled('title','','','li id="f_title" class="nline"');
 	// $this->data->iFieldLabelled('begin'); -TODO- unused ATM
 	echo $this->data->iFieldLabelled('deadline','','','li class="nline"');
 	?>
@@ -30,5 +30,19 @@ echo $this->data->iHidden('id');
 		<button type="submit" name="save" value="1" class="save">Save Task</button>
 	</li>
 </ol>
+<script type="text/javascript" src="<?php echo APP_WWW_URI.'asset/js/jquery.jdpicker.js'; ?>"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#f_task_edit').submit(function() {
+	  if ($.trim($('#i_title').val())) {
+	  	return true;
+	  } else {
+	  	$('#f_title').addClass('error');
+	  	$('#i_title').focus();
+	  	return false;
+	  }
+	});
+});
+</script>
 <?php
 $this->incView('include/page-bot', false);
