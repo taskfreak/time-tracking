@@ -339,10 +339,9 @@ jdPicker.prototype = {
   },
   
   insideSelector: function(event) {
-    var offset = this.dateSelector.position();
+    var offset = this.dateSelector.offset();
     offset.right = offset.left + this.dateSelector.outerWidth();
     offset.bottom = offset.top + this.dateSelector.outerHeight();
-    
     return event.pageY < offset.bottom &&
            event.pageY > offset.top &&
            event.pageX < offset.right &&
@@ -409,12 +408,12 @@ jdPicker.prototype = {
   setPosition: function() {
     var offset = this.input.offset();
     if ($('#cboxContent')[0]) {
-    } else {
-	    this.rootLayers.css({
-	      top: offset.top + this.input.outerHeight(),
-	      left: offset.left
-	    });
-	}
+    	var offset = this.input.position();
+    }
+	this.rootLayers.css({
+		top: offset.top + this.input.outerHeight(),
+		left: offset.left
+	});
     
     if (this.ieframe) {
       this.ieframe.css({
