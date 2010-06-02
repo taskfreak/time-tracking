@@ -57,7 +57,7 @@ class TaskModel extends Model {
 		}
 		ArrayHelper::arrayTrim($arr);
 		$obj = new TaskModel();
-		$tst = substr($arr[1],0,1);
+		$tst = substr($arr[2],0,1);
 		switch ($tst) {
 		case '*': // multiple
 			if ($arr[1] == '**') {

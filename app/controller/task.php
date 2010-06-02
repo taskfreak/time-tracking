@@ -89,9 +89,9 @@ class Task extends AppController {
 	
 	public function mainReaction() {
 		// drop if no checkbox have been checked
-		if (!isset($_POST['chk'])) {
+		if (!$this->fc->chkReqVar('chk')) {
 			// -TODO- show error
-			$this->fc->redirect(APP_WWW_URI.'task/main/','please check at least one task');
+			$this->fc->redirect(APP_WWW_URI.'task/main/','please mark at least one task');
 		}
 		// check action request
 		$action = $this->fc->chkReqVar('report,open,close,valid,archive,unarchive');

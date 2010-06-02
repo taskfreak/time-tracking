@@ -251,7 +251,9 @@ class FrontController extends HelpableSingleton {
 		foreach ($arrReq as $var) {
 			if (count($GLOBALS[$var])) {
 				foreach($GLOBALS[$var] as $key => $val) {
-					$GLOBALS[$var][$key] = stripslashes($val);
+					if (is_string($val)) {
+						$GLOBALS[$var][$key] = stripslashes($val);
+					}
 				}
 			}
 		}
