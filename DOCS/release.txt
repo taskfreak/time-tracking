@@ -1,3 +1,20 @@
+TaskFreak! Time Tracking
+------------------------
+
+Version 0.4 : 2010-06-11
+------------------------
+Added multi language support
+Added french translation
+Added non apache (mod_rewrite) support (needs testing)
+Improved UI by adding more icons
+Improved user menu (drop down menu)
+Fixed checkbox bug (checked tasks didn't change status)
+Fixed date shortcut on quick task entry
+Fixed javascript calendar bug when changing month or year
+Fixed changing password bug
+Fixed logging with password bug
+Other minor bug fixes
+
 Version 0.3 : 2010-05-30
 ------------------------
 Fixed subfolder installation (virtual host no longer required)

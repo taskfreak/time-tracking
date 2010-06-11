@@ -5,7 +5,7 @@ $this->incView('include/page-top', false);
 <div id="dmain" class="full">
 	<div id="dfilters">
 		<span>
-			<a href="<?php echo $this->fc->getUrl('admin/edit');?>" class="ajax box new inv" title="Create new user">Create user</a>
+			<a href="<?php echo $this->fc->getUrl('admin/edit');?>" class="ajax box new inv" title="<?php TR::phtml('ui','create_user'); ?>"><?php TR::phtml('ui','create_user'); ?></a>
 		</span>
 		<ul class="links horiz">
 			<?php
@@ -34,7 +34,7 @@ $this->incView('include/page-top', false);
 		<form id="search" action="<?php $this->fc->thisUrl(); ?>" method="get">
 			<p>
 				<input type="text" name="search" value="<?php echo $this->search; ?>" tabindex="4" />
-				<button type="submit" name="go" value="1">search</button>
+				<button type="submit" name="go" value="1"><?php TR::phtml('data','search'); ?></button>
 				<button type="button" onclick="this.form.elements[0].value='';this.form.submit()">x</button>
 			</p>
 		</form>
@@ -46,8 +46,8 @@ $this->incView('include/page-top', false);
 	<table>
 	<thead>
 		<tr>
-			<th>name</th>
-			<th>last visit</th>
+			<th><?php TR::phtml('form','name'); ?></th>
+			<th><?php TR::phtml('form','last_visit_date'); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -56,7 +56,8 @@ $this->incView('include/page-top', false);
 		$id = $this->data->getUid();
 		echo '<tr>';
 		echo '<td>';
-		echo '<a href="'.$this->fc->getUrl('admin','edit',array('id'=>$id)).'" class="onhold ajax box" title="Edit user">edit</a>';
+		echo '<a href="'.$this->fc->getUrl('admin','edit',array('id'=>$id)).'" class="onhold ajax box" title="'
+			.TR::html('button','edit').'">'.TR::html('button','edit').'</a>';
 		echo $this->data->html('nickname');
 		if ($tmp = $this->data->htmlRights()) {
 			echo ' <small>'.$tmp.'</small>';
@@ -71,7 +72,7 @@ $this->incView('include/page-top', false);
 	<?php
 	} else {
 	?>
-	<p class="empty">sorry, no user found</p>
+	<p class="empty"><?php TR::html('data','search_empty'); ?></p>
 	<?php
 	}
 	?>

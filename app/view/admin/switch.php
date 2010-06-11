@@ -2,7 +2,7 @@
 $this->incView('include/page-top', false);
 
 ?>
-<h1>Select user whose tasks you want to see</h1>
+<h1><?php TR::phtml('ui','select_user'); ?></h1>
 <ul>
 <?php
 while ($this->data->next()) {
@@ -10,7 +10,7 @@ while ($this->data->next()) {
 	if ($this->data->getUid() == $this->switch_id) {
 		echo $this->data->html('nickname');
 	} else {
-		echo '<a href="/admin/switch/id/'.$this->data->getUid().'">'.$this->data->html('nickname').'</a>';
+		echo '<a href="'.$this->fc->getUrl('admin','switch',array('id'=>$this->data->getUid())).'">'.$this->data->html('nickname').'</a>';
 	}
 	echo '</li>';
 }

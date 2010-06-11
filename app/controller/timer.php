@@ -4,7 +4,7 @@
  *
  * @package taskfreak_tt
  * @author Stan Ozier <taskfreak@gmail.com>
- * @version 0.3
+ * @version 0.4
  * @copyright GNU General Public License (GPL) version 3
  */
  
@@ -79,7 +79,7 @@ class Timer extends AppController {
 		echo '<script type="text/javascript">';
 		echo "reloadList(); window.setTimeout('$.fn.colorbox.close()',1000);";
 		echo '</script>';
-		echo '<p class="empty">time added</p>';
+		echo '<p class="empty">'.TR::html('message','time_added').'</p>';
 		return false;
 	}
 	
@@ -89,7 +89,7 @@ class Timer extends AppController {
 		$start = $this->fc->getReqVar('start');
 		
 		if (empty($id) || empty($start)) {
-			$this->fc->redirect(APP_WWW_URI,'ERROR:missing parameters');
+			$this->fc->redirect(APP_WWW_URI,'[error]action_failed');
 		}
 	
 		// delete timer
@@ -115,7 +115,7 @@ class Timer extends AppController {
 				echo "reloadList();";
 				echo '</script>';
 			} else {
-				$this->fc->redirect(APP_WWW_URI,'Timer deleted');
+				$this->fc->redirect(APP_WWW_URI,'deleted');
 			}
 		} else {
 			// error deleting
@@ -124,7 +124,7 @@ class Timer extends AppController {
 				echo 'alert("can not delete timer");';
 				echo '</script>';
 			} else {
-				$this->fc->redirect(APP_WWW_URI,'Timer NOT deleted');
+				$this->fc->redirect(APP_WWW_URI,'[error]action_deleted');
 			}
 		}
 		

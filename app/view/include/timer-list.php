@@ -5,9 +5,9 @@ if ($this->data->get('spent')) {
 <table class="list">
 	<thead>
 		<tr>
-			<th>start</th>
-			<th>stop</th>
-			<th>spent</th>
+			<th><?php TR::phtml('form','start'); ?></th>
+			<th><?php TR::phtml('form','stop'); ?></th>
+			<th><?php TR::phtml('task','spent'); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -25,7 +25,7 @@ if ($this->data->get('spent')) {
 			echo '<td>'.$this->data->htmlEnd().'</td>';
 			// time spent
 			echo '<td>';
-			echo '<a href="'.$this->fc->getUrl('timer','delete',$params).'" class="onhold ajax confirm" rel="tab2">delete</a>';
+			echo '<a href="'.$this->fc->getUrl('timer','delete',$params).'" class="onhold ajax confirm" rel="tab2">'.TR::html('button','delete').'</a>';
 			echo $this->data->getTimeSpent();
 			echo '</td>';
 			echo '</tr>';
@@ -34,14 +34,14 @@ if ($this->data->get('spent')) {
 	</tbody>
 	<tfoot>
 		<tr>
-			<td colspan="2">Total</td>
+			<td colspan="2"><?php TR::phtml('ui','total'); ?></td>
 			<td><?php echo TaskSummary::htmlTime($total); ?></td>
 		</tr>
 	</tfoot>
 </table>
 <?php
 } else {
-	echo '<p class="empty">No timers yet</p>';
+	echo '<p class="empty">'.TR::html('ui','history_empty').'</p>';
 }
 ?>
-<p class="empty"><a href="#tab3" onclick="tabber.show(3); return false;">Report more time spent</a></p>
+<p class="empty"><a href="#tab3" onclick="tabber.show(3); return false;"><?php TR::phtml('ui','report_spent'); ?></a></p>

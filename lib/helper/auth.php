@@ -4,7 +4,7 @@
  * 
  * @package tzn_helpers
  * @author Stan Ozier <framework@tirzen.com>
- * @version 0.2
+ * @version 0.4
  * @since 0.1
  * @copyright GNU Lesser General Public License (LGPL) version 3
  */
@@ -40,7 +40,7 @@ class AuthHelper extends Helper {
             }    
             if (crypt($password, $salt) != $pass) {
                     // password invalid
-                    $this->error = 'user_pass_invalid';
+                    $this->error = 'password_invalid';
                     $this->badAccess();
                     return false;
             }
@@ -49,7 +49,7 @@ class AuthHelper extends Helper {
             $sql = "ENCRYPT('$password','$salt')";
             if (!self::checkDbPass($sql, $pass)) {
             	// password not OK
-	            $this->error = 'user_pass_invalid';
+	            $this->error = 'password_invalid';
         	    $this->badAccess();
             	return false; // error or password mismatch
             }
@@ -58,7 +58,7 @@ class AuthHelper extends Helper {
             $sql = "ENCODE('$password','$pass')";
             if (!self::checkDbPass($sql, $pass)) {
             	// password not OK
-	            $this->error = 'user_pass_invalid';
+	            $this->error = 'password_invalid';
         	    $this->badAccess();
             	return false; // error or password mismatch
             }
@@ -70,7 +70,7 @@ class AuthHelper extends Helper {
 			$sql = "MD5('$password')";
             if (!self::checkDbPass($sql, $pass)) {
             	// password not OK
-	            $this->error = 'user_pass_invalid';
+	            $this->error = 'password_invalid';
         	    $this->badAccess();
             	return false; // error or password mismatch
             }
@@ -86,7 +86,7 @@ class AuthHelper extends Helper {
 					break;
 				}
 			}
-			$this->error = 'user_pass_invalid';
+			$this->error = 'password_invalid';
             $this->badAccess();
             return false;
             break;
@@ -101,7 +101,7 @@ class AuthHelper extends Helper {
             {
                 break;
             }
-            $this->error = 'user_pass_invalid';
+            $this->error = 'password_invalid';
             $this->badAccess();
             return false;
             break;
@@ -212,7 +212,7 @@ class AuthHelper extends Helper {
     public function login($username, $password, $activation=false) {
     	$this->error = '';
         if ($username == '') {
-            $this->error = 'user_name_empty';
+            $this->error = 'username_required';
             return false;
         }
         if (APP_AUTH_FIELD == 'username' && (!VarUsr::sanitize($username, $error))) {
@@ -225,11 +225,13 @@ class AuthHelper extends Helper {
             if (!$this->obj->get('enabled')) {
             	if (!$activation || $activation != $activ) {
 	                //Account Disabled
-    	            $this->error = 'user_disabled';
+    	            $this->error = 'account_disabled';
+            	} else {
+            		$this->error = 'account_not_active';
             	}
             }
             if (!$this->checkPassword($password)) {
-                $this->error = 'user_password_invalid';
+                $this->error = 'password_invalid';
             } else if ($activation && $activation == $activ) {
             	// activate account
             	$this->activateAccount(true);
@@ -239,7 +241,7 @@ class AuthHelper extends Helper {
 				return false;
 			}
         } else {
-            $this->error = 'user_name_not_found';
+            $this->error = 'username_not_found';
             return false;
         }
         
@@ -435,22 +437,20 @@ class AuthHelper extends Helper {
         if ($this->obj->get('salt') == "") {
             if (!$this->obj->loadByKey($key,$value)) {
                 // user not found
-                $this->_error['forgot'] = $key." not found";
+                $this->error = $key."_not_found";
                 return false;
             }
         }
         switch (APP_AUTH_PASSWORD_MODE) {
         case 1:
-        	$this->generateNewSalt();
-            $newpass = StringHelper::genRandom(6,"123456789");
-            $this->obj->set('password', crypt($pass1 , $this->obj->get('salt')));
-            $this->updatePassword();
-            break;
         case 2:
+        case 4:
+        case 5:
         	$this->generateNewSalt();
-            $newpass = StringHelper::genRandom(6,"123456789");
-            $this->obj->set('password', self::getDbPass("ENCRYPT(\"".$pass1."\",\"".$this->obj->get('salt')."\")"));
-            $this->updatePassword();
+	        $newpass = StringHelper::genRandom(6,"123456789");
+    	    $this->obj->setRawPassword($newpass, $this->obj->get('salt'));
+        	$this->updatePassword();
+        	return $newpass;
             break;
         case 3:
             $strSql = "SELECT DECODE(password, '".$this->obj->get('salt')
@@ -458,29 +458,19 @@ class AuthHelper extends Helper {
             	." WHERE ".$this->obj->dbUid()."='".$this->obj->getUid()."'";
             if ($rows = DbConnnector::query($strSql)) {
                 if (!empty($rows[0])) {
-                    $this->obj->password = $rows[0]->pass;
-                    return $this->obj->password;
+                    return $rows[0]->pass;
                 }
             }
-            $this->_error['forgot'] = "can not decode?";
-            return false;
-            break;
-		case 4:
-		case 5:
-			$this->generateNewSalt();
-            $newpass = StringHelper::genRandom(6,"123456789");
-			$this->password = "MD5('$newpass')";
-            $this->updatePassword();
             break;
         default:
             $iv = mcrypt_create_iv (mcrypt_get_iv_size (MCRYPT_3DES,
             	MCRYPT_MODE_ECB), MCRYPT_RAND);
-            $this->password = mcrypt_decrypt (MCRYPT_3DES, $this->obj->get('salt'),
+            return mcrypt_decrypt (MCRYPT_3DES, $this->obj->get('salt'),
             	$passBin, MCRYPT_MODE_ECB, $iv);
-            return $this->password;
             break;
         }
-        return $newpass;
+        $this->error = 'password_recover';
+        return false;
     }
     
     public function getLoginCountry() {

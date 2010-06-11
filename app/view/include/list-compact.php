@@ -8,22 +8,25 @@ if ($this->data->count()) {
 			<th>&nbsp;</th>
 			<th<?php
 				if ($this->order == 'deadline') echo ' class="active"';
-			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'deadline')); ?>">deadline</a></th>
+			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'deadline')); ?>"><?php TR::phtml('form','deadline'); ?></a></th>
 			<th<?php
 				if ($this->order == 'priority') echo ' class="active"';
 			?>>
-				<small><?php echo $this->data->total(); ?> item(s) found</small>
-				<a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'priority')); ?>">task</a>
+				<small><?php 
+					$ct =  $this->data->total();
+					echo $ct.' '.TR::html('data',($ct>1)?'items_found':'item_found');
+				?></small>
+				<a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'priority')); ?>"><?php TR::phtml('ui','task'); ?></a>
 			</th>
 			<th<?php
 				if ($this->order == 'start') echo ' class="active"';
-			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'start')); ?>">start</a></th>
+			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'start')); ?>"><?php TR::phtml('form','start'); ?></a></th>
 			<th<?php
 				if ($this->order == 'stop') echo ' class="active"';
-			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'stop')); ?>">stop</a></th>
+			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'stop')); ?>"><?php TR::phtml('form','stop'); ?></a></th>
 			<th<?php
 				if ($this->order == 'spent') echo ' class="active"';
-			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'spent')); ?>">spent</a></th>
+			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'spent')); ?>"><?php TR::phtml('task','spent'); ?></a></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -50,11 +53,13 @@ if ($this->data->count()) {
 		?></td>
 			<td><?php echo $this->data->htmlDeadline(); ?></td>
 			<td>
-				<a href="<?php echo $this->fc->getUrl('task','edit',array('id'=>$id)); ?>" class="onhold ajax box" title="Edit task">edit</a>
 				<?php
+				// edit link
+				echo '<a href="'.$this->fc->getUrl('task','edit',array('id'=>$id)).'" class="onhold ajax box" title="'
+					.TR::html('ui','edit_task').'">'.TR::html('button','edit').'</a>';
 				// priority
 				echo '<span class="prio pr'.$this->data->get('priority');
-				echo '">'.$this->data->get('priority').'</span> ';
+				echo '" title="'.$this->data->htmlPriority().'">'.$this->data->get('priority').'</span> ';
 				// note
 				echo '<a href="'.$this->fc->getUrl('task','view',array('id'=>$id)).'" ';
 					if ($this->data->isEmpty('note')) {
@@ -75,12 +80,12 @@ if ($this->data->count()) {
 				<?php
 				if ($this->data->isOpened($this->user_id)) {
 					echo '<a href="'.$this->fc->getUrl('task','timer',array('id'=>$id)).'" '
-						.'class="onhold clock ajax" title="start task" rel="drun">start</a>';
+						.'class="onhold clock ajax" title="'.TR::html('ui','start_task').'" rel="drun">'.TR::html('button','start').'</a>';
 				}
 				
 				echo '<span>';
 				if (!$this->expand && $cid == $id) {
-					echo 'running';
+					echo TR::html('task','running');
 				} else {
 					echo $this->data->getTimeSpent();
 				}
@@ -95,15 +100,15 @@ if ($this->data->count()) {
 	<tfoot>
 		<tr>
 			<td colspan="3">
-				<a href="javascript:checkAll('f_tasks')">select all</a> |
+				<a href="javascript:checkAll('f_tasks')"><?php TR::phtml('ui','select_all'); ?></a> |
 				<?php
 				foreach ($this->actions as $key => $label) {
 					echo ' <button type="submit" name="'.$key.'" '
-						.'value="1">'.VarStr::html($label).'</button>';
+						.'value="1">'.TR::html('button',$label).'</button>';
 				}
 				?>
 			</td>
-			<td colspan="2">TOTAL</td>
+			<td colspan="2"><?php TR::phtml('ui','total'); ?></td>
 			<td><?php echo TaskSummary::htmlTime($total); ?></td>
 		</tr>
 	</tfoot>
@@ -111,5 +116,5 @@ if ($this->data->count()) {
 </form>
 <?php
 } else {
-	echo '<p class="empty">No Task found</p>';
+	echo '<p class="empty">'.TR::html('error','search_empty').'</p>';
 }

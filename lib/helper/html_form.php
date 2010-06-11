@@ -94,7 +94,6 @@ class HtmlFormHelper extends Helper {
 	
 	/**
 	 * returns a field along with LABEL, all wrapped in a LI
-	 * @todo make the wrapper optional
 	 * @todo missing types
 	 */
 	public function iFieldLabelled($key, $label='', $type='', $wrap='li') {
@@ -144,7 +143,7 @@ class HtmlFormHelper extends Helper {
 			return false;
 		}
 		if (empty($label)) {
-			$label = str_replace('_',' ',$key); // -TODO- translate
+			$label = str_replace('_',' ',$key);
 		}
 		return $this->_htmlWrapBegin($wrap)
 			.'<label for="i_'.$key.'">'.$label.'</label>'
@@ -309,6 +308,30 @@ class HtmlFormHelper extends Helper {
 				$str .= ' selected="selected"';
 			}
 			$str .= ' value="'.$val.'">'.$lbl.'</option>';
+			$i++;
+		}
+		return $str.'</select>';
+	}
+	
+	/**
+	 * generates a select (drop down)
+	 */
+	public function iSelectTranslate($key, $section, $options='') {
+		if (isset($this->obj)) {
+			$options = $this->obj->getPropertyOptions($key);
+		}
+		if (empty($options['options'])) {
+			FC::log_warn("iRadio $key does not provide options");
+			return $key.' (no option)';
+		}
+		$str = '<select id="i_'.$key.'" name="'.$key.'">';
+		$i = 1;
+		foreach($options['options'] as $val => $lbl) {
+			$str .= '<option value="'.$val.'"';
+			if ($options['value'] == $val) {
+				$str .= ' selected="selected"';
+			}
+			$str .= ' value="'.$val.'">'.TR::html($section,$lbl).'</option>';
 			$i++;
 		}
 		return $str.'</select>';

@@ -3,8 +3,8 @@
 // ---- LOG and DEBUGGING -----------------------------------------------------
 
 $GLOBALS['config']['log_front'] = 0;
-$GLOBALS['config']['log_debug'] = 1;
-$GLOBALS['config']['log_message'] = 1;
+$GLOBALS['config']['log_debug'] = 0;
+$GLOBALS['config']['log_message'] = 0;
 $GLOBALS['config']['log_warn'] = 0;
 $GLOBALS['config']['log_error'] = 1;
 $GLOBALS['config']['log_core'] = 0;
@@ -24,14 +24,6 @@ $GLOBALS['config']['pages'] = array(
 	'Todo'		=> 'task/main',
 	'Report'	=> 'task/report',
 	'Archives'	=> 'task/archives'
-);
-
-// ---- LANGUAGE DEFAULTS -----------------------------------------------------
-
-$GLOBALS['config']['lang'] = array(
-	'default'		=> 'en',
-	'user'			=> 'en',
-	'specialchars'	=> 2
 );
 
 // ---- DATE / TIME FORMATS ---------------------------------------------------
@@ -58,20 +50,20 @@ $GLOBALS['config']['task'] = array(
 
 $GLOBALS['config']['task']['priority'] = array(
 	'options' => array(
-		1 => '1) urgent',
-		2 => '2) important',
-		3 => '3) quickly',
-		4 => '4) pretty soon',
-		5 => '5) normal',
-		6 => '6) after',
-		7 => '7) later',
-		8 => '8) anytime',
-		9 => '9) whatever'
+		1 => 'urgent',
+		2 => 'important',
+		3 => 'quickly',
+		4 => 'soon',
+		5 => 'normal',
+		6 => 'after',
+		7 => 'later',
+		8 => 'anytime',
+		9 => 'whenever'
 	),
 	'default'	=> 5
 );
 
-$GLOBALS['config']['task']['pagination'] = array('15'=>15,'25'=>25,'50'=>50,'all'=>0);
+$GLOBALS['config']['task']['pagination'] = array(15=>15,30=>30,50=>50,'all'=>0);
 $GLOBALS['config']['task']['pagination_default'] = 15;
 
 // ---- DEFAULT Javascript ----------------------------------------------------
@@ -88,6 +80,13 @@ $GLOBALS['config']['skin'] = 'default';
 
 // ---- LANGUAGE --------------------------------------------------------------
 
-$GLOBALS['config']['lang']['default'] = 'en';
-$GLOBALS['config']['lang']['user'] = 'en';
-$GLOBALS['config']['lang']['specialchars'] = 2;
+$GLOBALS['config']['lang'] = array(
+	'default'		=> 'en',
+	'user'			=> 'en',
+	'specialchars'	=> 2
+);
+
+$GLOBALS['config']['lang']['files'] = array(
+	'common.php'	=> APP_INCLUDE_PATH.'lib/lang/',
+	'freak.php'		=> APP_INCLUDE_PATH.'app/lang/'
+);

@@ -4,7 +4,7 @@
  * 
  * @package taskfreak_tt
  * @author Stan Ozier <taskfreak@gmail.com>
- * @version 0.2
+ * @version 0.4
  * @copyright GNU General Public License (GPL) version 3
  */
  
@@ -29,10 +29,10 @@ class MemberModel extends UserAclModel {
 		$arr = explode(',', $this->get('actags'));
 		$arrTrans = array();
 		if (in_array('task_see_all', $arr)) {
-			$arrTrans[] = 'task manager';
+			$arrTrans[] = TR::html('ui','task_manager');
 		}
 		if (in_array('admin_user', $arr)) {
-			$arrTrans[] = 'user admin';
+			$arrTrans[] = TR::html('ui','user_admin');
 		}
 		return implode(', ',$arrTrans);
 	}

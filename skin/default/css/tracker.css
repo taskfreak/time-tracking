@@ -3,9 +3,9 @@
 	position: absolute;
 	top: 0;
 	left: 50%;
-	margin-left: -250px;
+	margin-left: -220px;
 	padding: 6px 10px;
-	width: 500px;
+	width: 440px;
 	color: #036;
 	background-color: transparent;
 	z-index: 10;
@@ -40,7 +40,7 @@
 }
 #drun p input {
 	color: #036;
-	width: 300px;
+	width: 340px;
 	border: 0;
 	padding: 2px 5px 3px;
 	background-color: #39c;
@@ -66,15 +66,39 @@
 	float: right;
 }
 #drun button {
-	opacity: 0.5;
-	-moz-opacity: 0.5;
-	filter: alpha(opacity=50);
+	opacity: 0.85;
+	-moz-opacity: 0.85;
+	filter: alpha(opacity=85);
+	background: url(../img/buttons.png) no-repeat 0 0;
+	width: 34px;
+	height: 22px;
+	text-indent: -9999px;
+	overflow: hidden;
+	border: 0 none;
 }
 #drun button:hover, #drun button:focus {
 	opacity: 1;
 	-moz-opacity: 1;
 	filter: alpha(opacity=100);
 	outline: 0 none;
+}
+#drun button#b_save {
+	
+}
+#drun button#b_start {
+	background-position: -40px 0;
+}
+#drun button#b_resume {
+	background-position: -80px 0;
+}
+#drun button#b_pause {
+	background-position: -120px 0;
+}
+#drun button#b_stop {
+	background-position: -160px 0;
+}
+#drun button#b_close {
+	background-position: -200px 0;
 }
 #timerstatus.loading {
 	background: url(../img/barloader.gif) no-repeat center center;

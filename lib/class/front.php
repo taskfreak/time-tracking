@@ -4,7 +4,7 @@
  * 
  * @package tzn_core_classes
  * @author Stan Ozier <framework@tirzen.com>
- * @version 0.3
+ * @version 0.4
  * @copyright GNU Lesser General Public License (LGPL) version 3
  */
  
@@ -154,6 +154,7 @@ class FrontController extends HelpableSingleton {
 	 */
 	public function loadUserSettings() {
 		// might overload default controller and action
+		// and language
 		// -TODO-
 		if ($this->user->isLoggedIn()) {
 			$this->setSessionDefault('usertask', $this->user->getUid());
@@ -179,6 +180,8 @@ class FrontController extends HelpableSingleton {
 	 */
 	public function initTranslator() {
 		$this->addHelper('translator');
+		$this->loadLangConfig();
+		$this->loadLangFilesFromConfig();
 	}
 	
 	/**

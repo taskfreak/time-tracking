@@ -4,7 +4,7 @@
  * 
  * @package tzn_core_classes
  * @author Stan Ozier <framework@tirzen.com>
- * @version 0.3
+ * @version 0.4
  * @copyright GNU Lesser General Public License (LGPL) version 3
  */
 
@@ -692,7 +692,7 @@ class VarDte extends VarAbstract
 		if ($t = self::strToUnix($val)) {
 			return strftime(APP_DATE_SQL, $t);
 		}
-		$info['error'] = 'model_date_invalid';
+		$info['error'] = 'invalid_date';
 		return false;
 	}
 	
@@ -763,7 +763,7 @@ class VarDur extends VarAbstract
 			}
 			return $t;
 		} else {
-			$info['error'] = 'model_time_invalid';
+			$info['error'] = 'invalid_duration';
 			return false;
 		}
 	}
@@ -830,7 +830,7 @@ class VarTim extends VarDur
 			// now make GMT
 			return $t - self::getUserTimeZoneOffset();
 		}
-		$info['error'] = 'model_time_invalid';
+		$info['error'] = 'invalid_time';
 		return false;
 	}
 	
@@ -886,7 +886,7 @@ class VarDtm extends VarAbstract
 			// return datetime in SQL format
 			return $d.' '.VarDur::workout($t);
 		}
-		$info['error'] = 'model_datetime_invalid';
+		$info['error'] = 'invalid_datetime';
 		return false;
 	}
 	
@@ -983,7 +983,7 @@ class VarStr extends VarAbstract
 		}
 		switch ($GLOBALS['config']['lang']['specialchars']) {
 		case 3:
-			$val = htmlentities($val);
+			$val = htmlentities(utf8_decode($val));
 			break;
 		case 2:
 			$val = htmlspecialchars($val);
@@ -1007,20 +1007,19 @@ class VarUsr extends VarAbstract
 {
 	public static function sanitize($val, &$info) {
 		if (!$val && in_array('compulsory', $info)) {
-			$info['error'] = 'user_name_invalid';
+			$info['error'] = 'username_invalid';
 			return false;
 		}
 		if ((strlen($val) < APP_USER_NAME_MIN) 
         	|| (strlen($val) > APP_USER_NAME_MAX)) {
-            $info['error'] = 'user_name_length';
+            $info['error'] = 'username_length';
             return false;
         } else if (preg_match(APP_USER_SANITIZE, $val)) {
             return $val;
         } else {
-			$info['error'] = 'user_name_invalid';
+			$info['error'] = 'username_invalid';
 			return false;
 		}
-		return $val;
 	}
 	
 	public static function value($val) {
@@ -1043,15 +1042,21 @@ class VarPss extends VarAbstract
 				return true;
 			}
 		}
-		if (preg_match(APP_PASSWORD_SANITIZE, $val)) {
+		return $val;
+	}
+
+	public static function checkValid($val, &$info) {
+		if ((strlen($val) < APP_USER_PASS_MIN) 
+        	|| (strlen($val) > APP_USER_PASS_MAX)) {
+            $info['error'] = 'password_length';
+            return false;
+        } else if (preg_match(APP_PASSWORD_SANITIZE, $val)) {
             return $val;
         } else {
 			$info['error'] = 'password_invalid';
 			return false;
 		}
-		return $val;
 	}
-
 }
 
 /**
@@ -1144,6 +1149,7 @@ class VarXml extends VarAbstract
 /**
  * URL Variable - URL Address
  * @since 0.1
+ * @todo check if URL is valid
  */
 class VarUrl extends VarAbstract
 {
@@ -1176,7 +1182,7 @@ class VarEml extends VarAbstract
 		if (empty($val) || preg_match("/^[a-z0-9]([a-z0-9_\-\.\+]*)@([a-z0-9_\-\.]*)\.([a-z]{2,4})$/i",$val)) {
 			return $val;
 		} else {
-			$info['error'] = 'model_email_invalid'; // -TODO-TRANSLATE-
+			$info['error'] = 'invalid_email';
 			return '';
 		}
 	}

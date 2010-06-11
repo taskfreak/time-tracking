@@ -1,0 +1,46 @@
+TaskFreak! Time Tracking
+------------------------
+
+How to change the default language ?
+------------------------------------
+
+In app/config/app.php, go to the end of the file and modify its settings :
+
+For english :
+[code]
+$GLOBALS['config']['lang'] = array(
+	'default'		=> 'en',
+	'user'			=> 'en',
+	'specialchars'	=> 2
+);
+[/code]
+
+For french :
+[code]
+$GLOBALS['config']['lang'] = array(
+	'default'		=> 'fr',
+	'user'			=> 'fr',
+	'specialchars'	=> 2
+);
+[/code]
+
+Note : don't bother modifying the specialchars setting
+
+
+How can I translate this app to my language ?
+---------------------------------------------
+
+There's 5 files you need to look :
+- lib/lang/en/config.php
+- lib/lang/en/common.php
+- app/lang/en/freak.php
+- app/lang/en/help_multi_creation.php
+- app/lang/en/help_timer_creation.php
+
+1) Copy folder lib/lang/en to lib/lang/XX where XX is your language code
+2) Copy folder app/lang/en to app/lang/XX where XX is your language code
+3) Open all copied files and start translating
+4) Change the application settings (read instructions above) and test it all
+
+Then, please send them to taskfreak@gmail.com so your translation can be
+included in the next TaskFreak! release

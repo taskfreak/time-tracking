@@ -4,7 +4,7 @@
  *
  * @package taskfreak_tt 
  * @author Stan Ozier <taskfreak@gmail.com>
- * @version 0.3
+ * @version 0.4
  * @copyright GNU General Public License (GPL) version 3
  */
  
@@ -26,7 +26,7 @@ class Admin extends AppController {
 			$this->page->clean('js');
 		} else {
 			$this->page->add('css',array('form.css','freak.css','list.css','tracker.css','colorbox.css'));
-			// $this->page->add('js',array('jquery.form.min.js','jquery.colorbox-min.js'));
+			$this->_addJsSettings();
 			$this->page->add('js','freak.js');
 		}
 	}
@@ -42,17 +42,17 @@ class Admin extends AppController {
 		$this->limit = $this->fc->sessionVariable('userlimit');
 		$this->search = $this->fc->sessionVariable('search');
 		
-		$title = 'All users';
+		$title = TR::get('ui','all_users');
 		$filter = '';
 		
 		switch ($this->filter) {
 			case '1':
-				$title = 'Task managers';
+				$title = TR::get('ui','task_managers');
 				$filter = "actags LIKE '%task_see_all%'";
 				$this->limit = 0;
 				break;
 			case '2':
-				$title = 'User managers';
+				$title = TR::get('ui','user_admins');
 				$filter = "actags LIKE '%admin_user%'";
 				$this->limit = 0;
 				break;
@@ -101,9 +101,11 @@ class Admin extends AppController {
 		if ($this->fc->chkReqVar('pass1') && $this->fc->chkReqVar('pass2')) {
 			if ($this->data->setPassword($this->fc->getReqVar('pass1'), $this->fc->getReqVar('pass2'))) {
 				// save it all
+				error_log('setting new password : '.$this->fc->getReqVar('pass1'));
 				$this->data->ignore();
 			} else {
 				// do not save password
+				error_log('can not save password');
 				$this->data->ignore('password,salt');
 			}
 		}
@@ -113,10 +115,11 @@ class Admin extends AppController {
 			$myself = ($this->data->getUid() == $this->fc->user->getUid());
 			if ($this->data->save(!$myself)) {
 				if ($myself) {
-					// editing own profile need to relogin
+					// editing own profile need to reset session
+					error_log('updating session');
 					$this->data->updateSessionVariables();
 				}
-				$this->fc->autoRedirect('user saved');
+				$this->fc->autoRedirect('saved');
 			}
 		}
 		return true;
@@ -133,18 +136,18 @@ class Admin extends AppController {
 				$db->query('DELETE FROM '.$this->data->dbTable('acl_user').' WHERE user_id='.$this->data->getUid());
 				// delete this user's tasks
 				$db->query('DELETE FROM '.$this->data->dbTable('task').' WHERE member_id='.$this->data->getUid());
-				$this->fc->redirect(APP_WWW_URI.'admin','user deleted');
+				$this->fc->redirect($this->fc->getUrl('admin'),'deleted');
 			}
 		}
 		
-		$this->fc->redirect(APP_WWW_URI.'admin','user deleted');
+		$this->fc->redirect($this->fc->getUrl('admin'),'deleted');
 		
 	}
 	
 	public function switchAction() {
 	
 		if (!$this->fc->user->checkAcl('task_see_all')) {
-			$this->fc->redirect(APP_WWW_URI,'access_denied');
+			$this->fc->redirect(APP_WWW_URI,'[error]access_denied');
 		}
 	
 		if ($id = $this->fc->getReqVar('id')) {
@@ -156,7 +159,7 @@ class Admin extends AppController {
 				$this->fc->setSessionVariable('switch_id', $id);
 				$this->fc->setSessionVariable('switch_name', $obj->get('nickname'));
 			}
-			$this->fc->redirect(APP_WWW_URI,'switched to '.$obj->get('nickname'));
+			$this->fc->redirect(APP_WWW_URI,'[ui]switched');
 		}
 	
 		$this->switch_id = $this->fc->getSessionVariable('switch_id');
@@ -200,6 +203,20 @@ class Admin extends AppController {
 		}
 		
 		return true;
+	}
+	
+	protected function _addJsSettings() {
+		$js = "var RELOAD_URI='".APP_WWW_URI."task/main/ajax/1'; var URLMODREWRITE=true; ";
+		
+		if (!APP_URL_REWRITE) {
+			$js = "var RELOAD_URI='".APP_WWW_URI."?c=task&amp;a=main&amp;ajax=1'; var URLMODREWRITE=false; ";
+		}
+		
+		// translations
+		$js .= "var LANGRUNNING='".TR::html('task','running')."'; ";
+		$js .= "var LANGCONFIRM='".TR::html('data','delete_confirm')."'; ";
+		
+		$this->page->add('jsCode', $js);
 	}
 	
 }

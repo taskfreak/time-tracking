@@ -6,15 +6,15 @@ if ($this->current) {
 	if ($this->current->isEmpty('stop')) {
 		// task is running
 	?>
-		<!-- button type="submit" name="pause" value="1" class="submit" tabindex="2">pause</button -->
-		<button type="submit" name="stop" value="1" class="submit" tabindex="2">stop</button>
-		<button type="submit" name="close" value="1" class="warn" tabindex="3" onclick="return confirm('mark this task as done ?')">done</button>
+		<!-- button type="submit" id="b_pause" name="pause" value="1" class="submit" tabindex="2">pause</button -->
+		<button type="submit" id="b_stop" name="stop" value="1" tabindex="2"><?php TR::phtml('button','stop'); ?></button>
+		<button type="submit" id="b_close" name="close" value="1" tabindex="3" onclick="return confirm('<?php TR::phtml('ui','done_confirm'); ?>')"><?php TR::phtml('button','mark_done'); ?></button>
 	<?php
 	} else {
 		// task is paused (requested from ajax only)
 	?>
-		<button type="submit" name="resume" value="1" class="submit" tabindex="2">resume</button>
-		<button type="submit" name="stop" value="1" class="warn" tabindex="3">stop</button>
+		<button type="submit" id="b_resume" name="resume" value="1" tabindex="2"><?php TR::phtml('button','resume'); ?></button>
+		<button type="submit" id="b_stop" name="stop" value="1" tabindex="3"><?php TR::phtml('button','stop'); ?></button>
 	<?php
 	}
 	?>
@@ -29,8 +29,8 @@ if ($this->current) {
 } else {
 ?>
 	<div id="timerstatus">
-		<button type="submit" name="save" value="1" class="saveadd" tabindex="2">Save</button>
-		<button type="submit" name="start" value="1" class="save" tabindex="3">Start</button>
+		<button type="submit" id="b_save" name="save" value="1" tabindex="2"><?php TR::phtml('button','save'); ?></button>
+		<button type="submit" id="b_start" name="start" value="1" tabindex="3"><?php TR::phtml('button','save_and_start'); ?></button>
 	</div>
 	<p>
 		<input type="text" name="title" value="" tabindex="1" />

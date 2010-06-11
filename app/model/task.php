@@ -4,7 +4,7 @@
  * 
  * @package taskfreak_tt
  * @author Stan Ozier <taskfreak@gmail.com>
- * @version 0.2
+ * @version 0.4
  * @copyright GNU General Public License (GPL) version 3
  */
  
@@ -183,15 +183,15 @@ class TaskSummary extends TaskModel {
 	public function htmlPriority() {
 		$arr = $this->getPropertyOptions('priority');
 		$st = $this->get('priority');
-		return $arr['options'][$st];
+		return $st.') '.TR::html('priority',$arr['options'][$st]);
 	}
 	
 	public function htmlStatus() {
 		$arr = $this->getPropertyOptions('status');
 		$str = $this->get('status');
-		$str = $arr['options'][$str]; // -TODO- TRANSLATE
+		$str = TR::html('task',$arr['options'][$str]);
 		if ($this->get('archived')) {
-			$str .= ' (archived)';
+			$str .= ' ('.TR::html('task','archived').')';
 		}
 		return $str;
 	}
@@ -201,7 +201,6 @@ class TaskSummary extends TaskModel {
 			if ($this->isEmpty('begin')) {
 				return '-';
 			} else {
-				// -TODO- show in grey
 				return $this->html('begin',APP_DATE);
 			}
 		} else {
@@ -237,11 +236,11 @@ class TaskSummary extends TaskModel {
 			case 9999:
 				return '-';
 			case -1:
-				return 'yesterday';
+				return TR::html('date','yesterday');
 			case 0:
-				return 'today';
+				return TR::html('date','today');
 			case 1:
-				return 'tomorrow';
+				return TR::html('date','tomorrow');
 			default:
 				return $this->html('deadline',APP_DATE);
 			}
@@ -313,7 +312,7 @@ class TaskSummary extends TaskModel {
 			if ($stopped) {
 				return '--:--';
 			} else {
-				return 'running';
+				return TR::html('task','running');
 			}
 		}
 		$h = floor($spent / 60);

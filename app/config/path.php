@@ -34,3 +34,8 @@ $GLOBALS['config']['path']['js'] = array(
 	$GLOBALS['config']['skin'].'/js/',
 	'asset/js/'
 );
+
+$GLOBALS['config']['path']['lang'] = array(
+	'lib/lang/',
+	'app/lang/'
+);

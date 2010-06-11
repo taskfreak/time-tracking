@@ -4,30 +4,30 @@ $this->incView('include/page-top', false);
 <h1><?php echo $this->data->html('title'); ?></h1>
 <div id="tabs" class="tabs">
 	<ul id="tabs-nav" class="nav">
-		<li><a href="#tab1">info</a></li>
-		<li><a href="#tab2">history</a></li>
-		<li><a href="#tab3">report time spent</a></li>
+		<li><a href="#tab1"><?php TR::phtml('ui','info'); ?></a></li>
+		<li><a href="#tab2"><?php TR::phtml('ui','history'); ?></a></li>
+		<li><a href="#tab3"><?php TR::phtml('ui','report_spent'); ?></a></li>
 	</ul>
 	<div id="tab1" class="tab">
 		<table class="info">
 			<tbody>
 				<tr>
-					<th>deadline</th>
+					<th><?php TR::phtml('form','deadline'); ?></th>
 					<td><?php echo $this->data->htmlDeadline(); ?></td>
 				</tr>
 				<tr>
-					<th>priority</th>
+					<th><?php TR::phtml('task','priority'); ?></th>
 					<td><?php echo $this->data->htmlPriority(); ?></td>
 				</tr>
 				<tr>
-					<th>status</th>
+					<th><?php TR::phtml('form','status'); ?></th>
 					<td><?php echo $this->data->htmlStatus(); ?></td>
 				</tr>
 				<?php
 				if (!$this->data->isEmpty('note')) {
 				?>
 				<tr>
-					<th>note</th>
+					<th><?php TR::phtml('task','note'); ?></th>
 					<td><?php echo $this->data->html('note'); ?></td>
 				</tr>
 				<?php

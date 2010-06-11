@@ -25,7 +25,7 @@ class Login extends AppController {
 	 */
 	public function mainAction() {
 		$this->fc->user->addHelper('html_form');
-		$this->page->set('title','TaskFreak! Login');
+		$this->page->set('title','TaskFreak! '.TR::get('security','login'));
 		$this->page->add('css',array('form.css','freak.css','login.css'));
 		$this->page->add('js','form.js');
 		$this->setView('login/login');

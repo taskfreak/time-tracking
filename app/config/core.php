@@ -3,8 +3,6 @@ error_reporting(E_ALL);
 
 // --- APPLICATION SETUP ------------------------------------------------------
 
-$GLOBALS['config'] = array();
-
 // connect to database (see /app/config/db.php for settings)
 define('APP_SETUP_DATABASE', true);
 
@@ -15,13 +13,15 @@ define('APP_SETUP_GLOBAL_SETTINGS', false);
 define('APP_SETUP_USER_SETTINGS', false);
 
 // use translation helper
-define('APP_SETUP_TRANSLATOR', false);
+define('APP_SETUP_TRANSLATOR', true);
 
 // use (trans-sessions) messaging helper
 define('APP_SETUP_MESSAGING', true);
 
 // use navi helper
 define('APP_SETUP_NAVI', true);
+
+$GLOBALS['config'] = array();
 
 // --- USER AUTHENTICATION SETUP ----------------------------------------------
 
@@ -45,7 +45,7 @@ $GLOBALS['config']['auth'] = array(
 		// allow auto login (true or false)
 	'password_recover'	=> true,
 		// allow password recovery (true or false)
-	'register'			=> 2
+	'register'			=> 0
 		// register mode
 		// 0: no registration, 1: account created directly (no validation)
 		// 2: user validation (from email), 3: admin validate account
@@ -62,23 +62,30 @@ define('APP_CONFIG_PATH',APP_CORE_PATH.'config/');
 define('APP_MODEL_PATH',APP_CORE_PATH.'model/');
 define('APP_CONTROLLER_PATH',APP_CORE_PATH.'controller/');
 define('APP_VIEW_PATH',APP_CORE_PATH.'view/');
+define('APP_CACHE_PATH',APP_ROOT_PATH.'cache/');
 
 define('APP_INCLUDE_PATH', APP_ROOT_PATH);
-define('APP_CACHE_PATH',APP_INCLUDE_PATH.'cache/');
 define('APP_LIB_PATH',APP_INCLUDE_PATH.'lib/');
 define('APP_CLASS_PATH',APP_LIB_PATH.'class/');
 define('APP_HELPER_PATH',APP_LIB_PATH.'helper/');
+define('APP_LANGUAGE_PATH',APP_LIB_PATH.'lang/');
 
 define('APP_ASSET_PATH',APP_ROOT_PATH.'asset/');
-define('APP_LANGUAGE_PATH',APP_ASSET_PATH.'lang/');
 define('APP_PLUGIN_PATH',APP_ROOT_PATH.'plugin/');
 define('APP_SKIN_PATH',APP_ROOT_PATH.'skin/');
 
 // ---- APPLICATION URLs ------------------------------------------------------
 
-define('APP_URL_REWRITE', true);
-define('APP_WWW_URI', '/');
-// define('APP_WWW_URI', '/taskfreak/');
+define('APP_URL_REWRITE', false);
+
+$uri = trim(substr(APP_WWW_PATH,strlen($_SERVER['DOCUMENT_ROOT'])),'/');
+if (empty($uri)) {
+	$uri = '/';
+} else {
+	$uri = '/'.$uri.'/';
+}
+define('APP_WWW_URI', $uri);
+unset($uri);
 
 define('APP_WWW_URL','http://'.$_SERVER['SERVER_NAME'].APP_WWW_URI);
 
@@ -87,7 +94,7 @@ define('APP_WWW_URL','http://'.$_SERVER['SERVER_NAME'].APP_WWW_URI);
 define('APP_USER_ID_LENGTH',8);		// length of user ID
 define('APP_USER_SANITIZE','/^[a-z0-9_-]+$/i');
 define('APP_USER_NAME_MIN',4);		// minimum length for username
-define('APP_USER_NAME_MAX',15);		// maximum length for username
+define('APP_USER_NAME_MAX',16);		// maximum length for username
 define('APP_USER_PASS_MIN',4);		// minimum length for password
 define('APP_USER_PASS_MAX',16);		// maximum length for password
 define('APP_PASSWORD_SANITIZE','/^[a-z0-9%!@#&*+:;,<>\.\?\|\{\}\(\)\[\]\$_-]+$/i');

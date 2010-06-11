@@ -24,22 +24,25 @@ if ($this->data->count()) {
 			<th>&nbsp;</th>
 			<th<?php
 				if ($this->order == 'deadline') echo ' class="active"';
-			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'deadline')); ?>">deadline</a></th>
+			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'deadline')); ?>"><?php TR::phtml('form','deadline'); ?></a></th>
 			<th<?php
 				if ($this->order == 'priority') echo ' class="active"';
 			?>>
-				<small><?php echo count($arrData); ?> item(s) found</small>
-				<a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'priority')); ?>">task</a>
+				<small><?php 
+					$ct =  count($arrData);
+					echo $ct.' '.TR::html('data',($ct>1)?'items_found':'item_found');
+				?></small>
+				<a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'priority')); ?>"><?php TR::phtml('ui','task'); ?></a>
 			</th>
 			<th<?php
 				if ($this->order == 'start') echo ' class="active"';
-			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'start')); ?>">start</a></th>
+			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'start')); ?>"><?php TR::phtml('form','start'); ?></a></th>
 			<th<?php
 				if ($this->order == 'stop') echo ' class="active"';
-			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'stop')); ?>">stop</a></th>
+			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'stop')); ?>"><?php TR::phtml('form','stop'); ?></a></th>
 			<th<?php
 				if ($this->order == 'spent') echo ' class="active"';
-			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'spent')); ?>">spent</a></th>
+			?>><a href="<?php echo $this->fc->getUrl('task','main',array('order'=>'spent')); ?>"><?php TR::phtml('task','spent'); ?></a></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -81,10 +84,11 @@ if ($this->data->count()) {
 			
 			echo '<td>';
 			// edit link
-			echo '<a href="/task/edit/id/'.$id.'" class="onhold ajax box" title="Edit task">edit</a>';
+			echo '<a href="'.$this->fc->getUrl('task','edit',array('id'=>$id)).'" class="onhold ajax box" title="'
+				.TR::html('ui','edit_task').'">'.TR::html('button','edit').'</a>';
 			// priority
 			echo '<span class="prio pr'.$obj->get('priority');
-			echo '">'.$obj->get('priority').'</span> ';
+			echo '" title="'.$obj->htmlPriority().'">'.$obj->get('priority').'</span> ';
 			// note
 			echo '<a href="'.$this->fc->getUrl('task','view',array('id'=>$id)).'" ';
 				if ($obj->isEmpty('note')) {
@@ -112,7 +116,8 @@ if ($this->data->count()) {
 			// subtotal
 			echo '<td id="sts_'.$id,'">';
 			if ($obj->isOpened($this->user_id)) {
-				echo '<a href="/task/timer/id/'.$id.'" class="onhold clock ajax" title="start task" rel="drun">start</a>';
+				echo '<a href="'.$this->fc->getUrl('task','timer',array('id'=>$id)).'" '
+						.'class="onhold clock ajax" title="'.TR::html('ui','start_task').'" rel="drun">'.TR::html('button','start').'</a>';
 			}
 			echo TaskSummary::htmlTime($subtotal);
 			echo '</td>';
@@ -153,15 +158,15 @@ if ($this->data->count()) {
 	<tfoot>
 		<tr>
 			<td colspan="3">
-				<a href="javascript:checkAll('f_tasks')">select all</a> |
+				<a href="javascript:checkAll('f_tasks')"><?php TR::phtml('ui','select_all'); ?></a> |
 				<?php
 				foreach ($this->actions as $key => $label) {
 					echo ' <button type="submit" name="'.$key.'" '
-						.'value="1">'.VarStr::html($label).'</button>';
+						.'value="1">'.TR::html('button',$label).'</button>';
 				}
 				?>
 			</td>
-			<td colspan="2">TOTAL</td>
+			<td colspan="2"><?php TR::phtml('ui','total'); ?></td>
 			<td><?php echo TaskSummary::htmlTime($total); ?></td>
 		</tr>
 	</tfoot>
@@ -169,5 +174,5 @@ if ($this->data->count()) {
 </form>
 <?php
 } else {
-	echo '<p>No Task found</p>';
+	echo '<p class="empty">'.TR::html('error','search_empty').'</p>';
 }

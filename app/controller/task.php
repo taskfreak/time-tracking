@@ -4,7 +4,7 @@
  *
  * @package taskfreak_tt 
  * @author Stan Ozier <taskfreak@gmail.com>
- * @version 0.3
+ * @version 0.4
  * @copyright GNU General Public License (GPL) version 3
  */
  
@@ -38,45 +38,46 @@ class Task extends AppController {
 		} else {
 			$this->page->add('css',array('form.css','freak.css','list.css','tracker.css','colorbox.css'));
 			// $this->page->add('js',array('jquery.form.min.js','jquery.colorbox-min.js'));
+			$this->_addJsSettings();
 			$this->page->add('js','freak.js');
 		}
 	}
 	
 	public function mainAction() {
 		$this->filter = $this->fc->sessionVariable('filter');
-		$title = 'Todo';
+		$title = 'todo';
 		$filter = 'status=0 AND archived=0';
 		$this->actions = array();
 		switch ($this->filter) {
 			case '1':
-				$title = 'Completed';
+				$title = 'done';
 				$filter = 'status=1 AND archived=0';
-				$this->actions['open'] = 'Re-open';
-				$this->actions['valid'] = 'Validate';
-				$this->actions['archive'] = 'Archive';
+				$this->actions['open'] = 'reopen';
+				$this->actions['valid'] = 'validate';
+				$this->actions['archive'] = 'archive';
 				break;
 			case '2':
-				$title = 'Valid'; // -TODO- check english term
+				$title = 'valid';
 				$filter = 'status=2 AND archived=0';
-				$this->actions['open'] = 'Re-open';
-				$this->actions['archive'] = 'Archive';
+				$this->actions['open'] = 'reopen';
+				$this->actions['archive'] = 'archive';
 				break;
 			case '3':
-				$title = 'Archives';
+				$title = 'archives';
 				$filter = 'archived=1';
-				$this->actions['unarchive'] = 'Unarchive';
+				$this->actions['unarchive'] = 'unarchive';
 				break;
 			default:
-				$this->actions['report'] = 'Report 1 day';
-				$this->actions['close'] = 'Mark as done';
-				$this->actions['valid'] = 'Validate';
-				$this->actions['archive'] = 'Archive';
+				$this->actions['report'] = 'postpone_1_day';
+				$this->actions['close'] = 'mark_done';
+				$this->actions['valid'] = 'validate';
+				$this->actions['archive'] = 'archive';
 				break;
 		}
 		
 		$this->_taskList($filter);
 		
-		$this->page->set('title',$title.' | TaskFreak! Time Tracker');
+		$this->page->set('title',TR::get('pages',$title).' | TaskFreak! Time Tracker');
 		
 		if ($this->fc->getReqVar('ajax')) {
 			$this->setView('include/list-'.($this->expand?'expand':'compact'));
@@ -91,14 +92,14 @@ class Task extends AppController {
 		// drop if no checkbox have been checked
 		if (!$this->fc->chkReqVar('chk')) {
 			// -TODO- show error
-			$this->fc->redirect(APP_WWW_URI.'task/main/','please mark at least one task');
+			$this->fc->redirect($this->fc->getUrl('task','main'),'[error]none_checked');
 		}
 		// check action request
 		$action = $this->fc->chkReqVar('report,open,close,valid,archive,unarchive');
 		// do it then
 		TaskModel::updateManyAtOnce($action, $_POST['chk']);
 		// reload entire page
-		$this->fc->redirect(APP_WWW_URI.'task/main/');
+		$this->fc->redirect($this->fc->getUrl('task','main'));
 	}
 	
 	/**
@@ -123,7 +124,7 @@ class Task extends AppController {
 				// now start selected task
 				TimerModel::start($id);
 				$this->current = TaskSummary::loadCurrent();
-				$this->jsCode .= "clockstart('$id')";
+				$this->jsCode .= "clockstart('$id');$('#drun button').wTip();";
 			}
 			$this->setView('include/timer');
 			$this->view();
@@ -159,7 +160,7 @@ class Task extends AppController {
 					$this->jsCode .= "clockreport('$cid');clockstatus('paused');";
 				} else {
 					// nope, requested task is not running, show error
-					$this->jsCode = "alert('error trying to pause')";
+					$this->jsCode = "alert('".TR::get('error','action_failed')."')";
 					FC::log_debug('error trying to pause non running task');
 				}
 				break;
@@ -173,7 +174,7 @@ class Task extends AppController {
 				if (TimerModel::stop($id)) {
 					$this->jsCode = "clockstatus();";
 				} else {
-					$this->jsCode = "alert('task already stopped');";
+					$this->jsCode = "alert('".TR::get('error','action_failed')."');";
 				}
 				$this->current = false;
 				break;
@@ -273,7 +274,7 @@ class Task extends AppController {
 		$this->timer = new TimerModel();
 		$this->timer->addHelper('html_form');
 		
-		$this->page->set('title','Todo details | TaskFreak! Time Tracker');
+		$this->page->set('title',TR::get('pages','view_task').' | TaskFreak! Time Tracker');
 		// $this->page->add('js',array('jquery.dateentry.pack.js','jquery.timeentry.pack.js'));
 		$this->setView('view');
 		$this->view();
@@ -282,7 +283,7 @@ class Task extends AppController {
 	public function createAction() {
 		$this->_loadTask();
 		$this->data->addHelper('html_form');
-		$this->page->set('title','Create Multiple Todos | TaskFreak! Time Tracker');
+		$this->page->set('title',TR::get('pages','create_tasks').' | TaskFreak! Time Tracker');
 		$this->setView('create');
 		$this->view();
 	}
@@ -305,14 +306,14 @@ class Task extends AppController {
 				}
 			}
 		}
-		$this->fc->redirect(APP_WWW_URI.'task/main',$i.' task(s) created !');
+		$this->fc->redirect($this->fc->getUrl('task','main'),'created'); // -TODO- show $i
 	}
 	
 	public function editAction() {
 		$this->_loadTask();
 		$this->data->addHelper('html_form');
 		
-		$this->page->set('title',($this->data->getUid()?'Edit':'Create').' Todo | TaskFreak! Time Tracker');
+		$this->page->set('title',TR::get('pages',($this->data->getUid()?'edit':'create').'_task').' | TaskFreak! Time Tracker');
 		$this->setView('edit');
 		$this->view();
 	}
@@ -340,6 +341,20 @@ class Task extends AppController {
 			}
 		}
 		return $this->data->getUid();
+	}
+	
+	protected function _addJsSettings() {
+		$js = "var RELOAD_URI='".APP_WWW_URI."task/main/ajax/1'; var URLMODREWRITE=true; ";
+		
+		if (!APP_URL_REWRITE) {
+			$js = "var RELOAD_URI='".APP_WWW_URI."?c=task&amp;a=main&amp;ajax=1'; var URLMODREWRITE=false; ";
+		}
+		
+		// translations
+		$js .= "var LANGRUNNING='".TR::html('task','running')."'; ";
+		$js .= "var LANGCONFIRM='".TR::html('data','delete_confirm')."'; ";
+		
+		$this->page->add('jsCode', $js);
 	}
 	
 }

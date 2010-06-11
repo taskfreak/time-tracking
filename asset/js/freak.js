@@ -1,4 +1,3 @@
-var RELOAD_URI='/task/main/ajax/1';
 var AUTORELOAD=300000;
 var AUTODELAY=60000;
 var AUTOHIDE=2500;
@@ -18,6 +17,7 @@ function reloadList() {
 			$("#dlist").html(html);
 			$('#dlist *[title]').wTip();
 			$('a.ajax').makeajax();
+			$('#dlist table thead tr th').makeClickable();
 		    $('#dlist table tbody tr td').makeClickable();
 		    startAlive(AUTORELOAD);
 		}
@@ -61,7 +61,7 @@ function clockstart(id) {
 		if (el[0]) {
 			$('#dlist table tbody tr').removeClass('current');
 			el.addClass('current');
-			$('#sts_'+id+' span').html('running');
+			$('#sts_'+id+' span').html(LANGRUNNING);
 		}
 	} else {
 		timer = $('#i_timer').val();
@@ -84,6 +84,7 @@ function clockstatus(cl) {
 $(document).ready(function(){
 
 	$('*[title]').wTip();
+	$('#drun button').wTip();
 	bindAjax();
 	
 	$('input:first').focus();
@@ -96,8 +97,12 @@ $(document).ready(function(){
     $('#drun').ajaxForm({
     	target:	'#drun',
     	data: {'ajax':'1'},
-    	beforeSubmit:  clockstop,
+    	beforeSubmit:  function() {
+    		clockstop();
+    		$("p#vtip").remove();
+    	},
     	complete: function() {
+    		$('#drun button').wTip();
     		$('#drun input').focus();
     	}
     });
@@ -106,6 +111,7 @@ $(document).ready(function(){
     $('a.ajax').makeajax();
 
     // bind rows/td clicks
+    $('#dlist table thead tr th').makeClickable();
     $('#dlist table tbody tr td').makeClickable();
 
     // focus on first field when opening a cbox
@@ -117,6 +123,15 @@ $(document).ready(function(){
 	el = $('.reload').first();
 	RELOAD_URI = el.attr('href');
 	el.attr('href','javascript:reloadList()');
+	
+	// enable user menu on hover
+	$('#duser p a').mouseenter(function() {
+		$('#dmenu').slideDown(100);
+		$('#duser').mouseleave(function() {
+			$('#dmenu').slideUp(100);
+			$(this).unbind('mouseleave');
+		});
+	});
     
     // reload task list every 5 minutes
     startAlive(AUTORELOAD);
@@ -131,6 +146,10 @@ function cleanMessage() {
 	$('#message').fadeOut('slow', function() {
     	$(this).removeClass('message error').html('...').fadeIn();
     });
+}
+
+function showmenu() {
+	$('#dmenu').slideToggle(100);
 }
 
 function startAlive(d) {
@@ -168,6 +187,9 @@ jQuery.fn.makeClickable = function() {
 	return this.each(function() {
 		$(this).click(function(e) {
 			if (e.target.nodeName == 'A') {
+				if (!e.target.href.match(/(ajax)/)) {
+					window.location.href = e.target.href;
+				}
 				return true;
 			}
 			el = $(this);
@@ -196,8 +218,14 @@ function bindAjax() {
 
 jQuery.fn.makeajax = function(boxed) {
 	return this.each(function() {
-		if (!this.href.match(/(ajax\/1)/)) {
-			this.href = this.href+'/ajax/1';
+		if (!this.href.match(/(ajax)/)) {
+			if (URLMODREWRITE) {
+				this.href = this.href+'/ajax/1';
+			} else if (this.href.match(/\?/)) {
+				this.href = this.href+'&ajax=1';
+			} else {
+				this.href = this.href+'?ajax=1';
+			}
 			el = $(this);
 			if (el.hasClass('bigbox')) {
 				el.colorbox({title:'...',width:"700", height:"400"});
@@ -216,7 +244,7 @@ jQuery.fn.ajaxify = function(target) {
 			e.preventDefault();
 			el = $(this);
 			if (el.hasClass('confirm')) {
-				if (!confirm('Really delete this item ?')) {
+				if (!confirm('Really delete this item ?')) { // -TODO-TRANSLATE-
 					return false;
 				}
 			}
@@ -256,6 +284,9 @@ jQuery.fn.wTip = function() {
 	        function(e) {
 	            this.t = this.title;
 	            this.title = '';
+	            if (!this.t) {
+	            	this.t = $(this).html();
+	            }
 	            var inv = $(this).hasClass('inv');
 	            this.top = (e.pageY + yOffset);
 	            if (inv) {

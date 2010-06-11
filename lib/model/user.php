@@ -4,7 +4,7 @@
  * 
  * @package tzn_models
  * @author Stan Ozier <framework@tirzen.com>
- * @version 0.2
+ * @version 0.4
  * @since 0.1
  * @copyright GNU Lesser General Public License (LGPL) version 3
  */
@@ -86,38 +86,18 @@ abstract class UserModel extends Model {
             	'abcdefghijklmnopqrstuvwxyz'
             	.'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'));
             if ($pass1) {
-                if ((strlen($pass1) >= APP_USER_PASS_MIN) 
-                	&& (strlen($pass1) <= APP_USER_PASS_MAX))
+            	$arr = explode(',',$this->_properties[$key]);
+				$class = array_shift($arr);
+                if (VarPss::checkValid($pass1, $arr))
                 {
-                	$salt = $this->get('salt');
+                	$this->setRawPassword($pass1, $this->get('salt'));
                 	
-                    switch (APP_AUTH_PASSWORD_MODE) {
-                    case 1:
-                        $this->set('password',crypt($pass1 , $salt));
-                        break;
-                    case 2:
-                        $this->set('password',AuthHelper::getDbPass("ENCRYPT('$pass1','$salt')"));
-                        break;
-                    case 3:
-                        $this->set('password',AuthHelper::getDbPass("ENCODE('$pass1','$salt')"));
-                        break;
-					case 4:
-					case 5:
-						$this->set('password',AuthHelper::getDbPass("MD5('$pass1')"));
-						break;
-                    default:
-                        $iv = mcrypt_create_iv (mcrypt_get_iv_size(MCRYPT_3DES
-                        	, MCRYPT_MODE_ECB), MCRYPT_RAND);
-                        $crypttext = mcrypt_encrypt(APP_AUTH_PASSWORD_MODE, $salt
-                        	, $pass1, MCRYPT_MODE_ECB, $iv);
-                        $this->set('password',bin2hex($crypttext));
-                    }
                 } else {
                     $this->_error['password'] = 'user_pass_length';
                     return false;
                 }
             } else {
-                $this->set('password','');
+                $this->data['password'] = '';
             }
             return true;
         } else {
@@ -126,6 +106,31 @@ abstract class UserModel extends Model {
                 return false;
             }
             return true;
+        }
+	}
+	
+	public function setRawPassword($pass, $salt) {
+		switch (APP_AUTH_PASSWORD_MODE) {
+        case 1:
+            $this->data['password'] = crypt($pass , $salt);
+            break;
+        case 2:
+            $this->data['password'] = AuthHelper::getDbPass("ENCRYPT('$pass','$salt')");
+            break;
+        case 3:
+            $this->data['password'] = AuthHelper::getDbPass("ENCODE('$pass','$salt')");
+            break;
+		case 4:
+		case 5:
+			$this->data['password'] = AuthHelper::getDbPass("MD5('$pass')");
+			break;
+        default:
+            $iv = mcrypt_create_iv (mcrypt_get_iv_size(MCRYPT_3DES
+            	, MCRYPT_MODE_ECB), MCRYPT_RAND);
+            $crypttext = mcrypt_encrypt(APP_AUTH_PASSWORD_MODE, $salt
+            	, $pass, MCRYPT_MODE_ECB, $iv);
+            $this->data['password'] = bin2hex($crypttext);
+            break;
         }
 	}
 	
