@@ -1,7 +1,7 @@
 <?php
 
 define('APP_DB_HOST','localhost');
-define('APP_DB_USER','root');       // edit here
+define('APP_DB_USER','test');       // edit here
 define('APP_DB_PASS','');           // edit here
 define('APP_DB_BASE','taskfreak_timer');       // edit here
 define('APP_DB_PREFIX','');

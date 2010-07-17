@@ -347,25 +347,36 @@ class HtmlFormHelper extends Helper {
 		}
 		
 		$timezone_identifiers = DateTimeZone::listIdentifiers();
-		$str = '<select id="id_'.$key.'" name="'.$key.'">';
+		$arrTz = $arrCt = array();
 		$continent = '';
 		foreach( $timezone_identifiers as $value ) {
-	        if ( preg_match( '/^(America|Antartica|Arctic|Asia|Atlantic|Europe|Indian|Pacific)\//', $value ) ) {
-	            $ex=explode("/",$value);//obtain continent,city   
-	            if ($continent!=$ex[0]){
-	                if ($continent!="") echo '</optgroup>';
-	                $str .= '<optgroup label="'.$ex[0].'">';
-	            }
-	            $city=$ex[1];
-	            $continent=$ex[0];
+			if (!preg_match( '/^(Africa|America|Antartica|Arctic|Asia|Atlantic|Australia|Europe|Indian|Pacific)\//', $value )) {
+				continue;
+			}
+			$arrZn = explode('/', $value);
+			if ($continent != $arrZn[0]) {
+				if (count($arrCt)) {
+					ksort($arrCt);
+					$arrTz[$continent] = $arrCt;
+				}
+				$continent = $arrZn[0];
+				$arrCt = array();
+			}
+			$city = str_replace('_',' ',(count($arrZn)>2)?$arrZn[2]:$arrZn[1]);
+			$arrCt[$city] = $value;
+		}
+		$str = '<select id="id_'.$key.'" name="'.$key.'">';
+		foreach( $arrTz as $continent => $arrCt ) {
+			$str .= '<optgroup label="'.$continent.'">';
+			foreach($arrCt as $city => $value) {
 	            $str .= '<option value="'.$value.'"';
 	            if ($value == $default) {
 	            	$str .= ' selected="selected"';
 	            }
 	            $str .='>'.$city.'</option>';               
 	        }
+	        $str .= '</optgroup>';
 	    }
-	    $str .= '</optgroup>';
 	    return $str.'</select>';
     }
     	

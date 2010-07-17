@@ -125,6 +125,8 @@ define("APP_DATETIME_LNG","%d %B %Y, %H:%M");
 define("APP_DATETIME_LNX","%A %d %B %Y, %H:%M");
 define("APP_DATETIME_HRS","%H:%M");
 
+define('APP_DATE_RFC822', '%a, %d %b %Y %H:%M:%S %z');
+
 // date_default_timezone_set('Europe/Paris');
 define('APP_TIMEZONE_SERVER',date_default_timezone_get());
 define('APP_TZSERVER',intval(date('Z')));
@@ -154,3 +156,11 @@ if (@constant('APP_TRANS_ID')) {
 	ini_set('session.use_trans_sid', 0);
 	ini_set('session.use_only_cookies', 1);
 }
+
+// ---- AGENT DETECTION -------------------------------------------------------
+
+define('APP_ROBOT_AGENT', 'Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|AcioRobot|ASPSeek|'
+    		.'CocoCrawler|Dumbot|FAST\-WebCrawler|GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|'
+    		.'AltaVista|IDBot|eStyle|Scrubby');
+    		
+define('APP_IPHONE_AGENT', 'iPhone|iPod|iPad');

@@ -18,7 +18,7 @@ class Task extends AppController {
 
 	public function __construct() {
 		parent::__construct(true);
-		
+
 		$this->fc->setSessionDefault('order','deadline');
 		$this->fc->setSessionDefault('limit',$GLOBALS['config']['task']['pagination_default']);
 		if (APP_SETUP_USER_MODEL) {

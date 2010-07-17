@@ -4,7 +4,7 @@
  * 
  * @package taskfreak_tt
  * @author Stan Ozier <taskfreak@gmail.com>
- * @version 0.1
+ * @version 0.5
  * @copyright GNU General Public License (GPL) version 3
  */
  
@@ -75,7 +75,7 @@ class TimerModel extends Model {
 	 * stops a timer
 	 */
 	public static function stop($tid) {
-		if (!($tid = VarUid::sanitize($tid, $err))) {
+		if (!($tid = VarUid::sani($tid))) {
 			return false;
 		}
 		$filter = "task_id='$tid' AND stop='0000-00-00 00:00:00'";

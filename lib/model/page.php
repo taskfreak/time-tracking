@@ -4,7 +4,7 @@
  * 
  * @package tzn_models
  * @author Stan Ozier <framework@tirzen.com>
- * @version 0.2
+ * @version 0.5
  * @since 0.1
  * @copyright GNU Lesser General Public License (LGPL) version 3
  */
@@ -37,6 +37,10 @@ class PageModel extends Model {
 			$this->set('keywords',$GLOBALS['config']['page']['keywords']);
 		}
 		include APP_ASSET_PATH.'html/page-header.php';
+	}
+	
+	public function iphoneHeader() {
+		include APP_ASSET_PATH.'html/iphone-header.php';
 	}
 	
 	public function dispatchFooter() {

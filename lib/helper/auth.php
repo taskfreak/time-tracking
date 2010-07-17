@@ -279,21 +279,21 @@ class AuthHelper extends Helper {
 			return false;
 		}
         $arrVal = explode(":",$_COOKIE['auto_login']);
-		$id = VarUid::sanitize($arrVal[0]);
-		$salt = VarStr::sanitize($arrVal[1]);
+		$id = VarUid::sani($arrVal[0]);
+		$salt = VarStr::sani($arrVal[1]);
 		if (!$id || !$salt) {
 			return false;
 		}
-        if ($this->obj->load($this->dbUid(true)."='".$id
-        	."' AND ".$this->dbField('salt', $salt)." AND "
-        	.$this->dbField('auto_login',1)." AND ".$this->dbField('enabled',1)) 
+        if ($this->obj->load($this->obj->dbUid(true)."='".$id
+        	."' AND ".$this->obj->dbField('salt', $salt)." AND "
+        	.$this->obj->dbField('auto_login',1)." AND ".$this->obj->dbField('enabled',1)) 
         ) {
 			if (!$forReal) {
 				return true;
 			}
 			setCookie('auto_login',$this->obj->getUid().":".$this->obj->get('salt')
 				,time()+(3600*24*30));
-            $this->activateLogin();
+            $this->_activateLogin();
             return true;
         } else {
             return false;
@@ -304,7 +304,7 @@ class AuthHelper extends Helper {
 	*/
     public function setAutoLogin() {
         if (($this->obj->getUid()) && ($this->obj->get('salt'))) {
-            setCookie('autoLogin',$this->obj->getUid().":".$this->obj->get('salt')
+            setCookie('auto_login',$this->obj->getUid().":".$this->obj->get('salt')
             	,time()+(3600*24*30));
             $this->obj->set('auto_login','1');
             $this->obj->fields('auto_login');
@@ -318,7 +318,7 @@ class AuthHelper extends Helper {
 	*/
     public function resetAutoLogin() {
         if (($this->obj->getUid()) && ($this->obj->get('salt'))) {
-            setCookie('autoLogin');
+            setCookie('auto_login');
             if ($this->obj->get('auto_login')) {
 	            $this->obj->set('auto_login', 0);
     	        $this->obj->fields('auto_login');

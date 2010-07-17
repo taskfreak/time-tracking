@@ -4,7 +4,7 @@
  * 
  * @package tzn_core_classes
  * @author Stan Ozier <framework@tirzen.com>
- * @version 0.1
+ * @version 0.5
  * @copyright GNU Lesser General Public License (LGPL) version 3
  */
 
@@ -156,7 +156,7 @@ class DbConnector { // extends HelpableSingleton
 		// if critical, should at least show an error code in browser
 		$debug = ($this->critical && $this->debug < 2)?2:$this->debug;
 
-		$html = '';
+		$htm = '';
 		$str = 'DB Error #'.$this->connector->getErrorNo().' : '.$this->connector->getErrorMsg();
 		switch ($debug) {
 		case 2:

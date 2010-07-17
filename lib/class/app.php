@@ -26,7 +26,7 @@ abstract class AppController extends Pluginable {
 	 * constructor
 	 * @param mixed $login is user login required
 	 */
-	public function __construct($login=false) {
+	public function __construct($login=false, $iphone=false) {
 		parent::__construct();
 		
 		// get front controller instance
@@ -35,10 +35,21 @@ abstract class AppController extends Pluginable {
 		// instantiate page
 		$this->page = new PageModel();
 		
+		// detect iphone
+		if (preg_match('/'.APP_IPHONE_AGENT.'/', $_SERVER['HTTP_USER_AGENT']) && !$iphone) {
+			NaviHelper::redirect($this->fc->getUrl('iphone'));
+		}
+		
 		// check login ?
 		if ($login && APP_SETUP_USER_MODEL) {
 			if (!$this->fc->user->isLoggedIn()) {
-				NaviHelper::redirect($this->fc->getUrl('login'));
+				if (is_string($login)) {
+					if ($this->fc->controller != StringHelper::flatToCamel($login,true) || $this->fc->action != 'login') {
+						NaviHelper::redirect($this->fc->getUrl($login,'login'));
+					}
+				} else {
+					NaviHelper::redirect($this->fc->getUrl('login'));
+				}
 			}
 		}
 	}
@@ -63,6 +74,16 @@ abstract class AppController extends Pluginable {
 	
 	protected function viewXml($encoding='UTF-8') {
 		echo '<'.'?xml version="1.0" encoding="'.$encoding.'"?'.">\n";
+		include APP_VIEW_PATH.$this->view.'.php';
+	}
+	
+	protected function viewIPhone() {
+		$this->page->iphoneHeader();
+		include APP_VIEW_PATH.$this->view.'.php';
+		$this->page->dispatchFooter();
+	}
+	
+	protected function viewRaw() {
 		include APP_VIEW_PATH.$this->view.'.php';
 	}
 	

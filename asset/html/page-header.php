@@ -17,7 +17,7 @@ if (!$this->isEmpty('keywords')) {
 }
 
 if (file_exists(APP_WWW_PATH.'favicon.ico')) {
-	echo '<link rel="SHORTCUT ICON" href="'.APP_WWW_URI.'favicon.ico" />';
+	echo '<link rel="SHORTCUT ICON" href="'.APP_WWW_URI.'favicon.ico" />'."\n";
 }
 
 $this->callHelper('html_asset','headerStuff'); 

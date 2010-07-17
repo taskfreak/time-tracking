@@ -4,7 +4,7 @@
  * 
  * @package tzn_helpers
  * @author Stan Ozier <framework@tirzen.com>
- * @version 0.3
+ * @version 0.5
  * @since 0.1
  * @copyright GNU Lesser General Public License (LGPL) version 3
  */
@@ -17,9 +17,11 @@
 class HtmlAssetHelper extends Collectable {
 
 	protected $css, $cssCode, $js, $jsCode, $jsEditor, $jsCalendar, $jsOnLoad, $rss;
+	protected $_jsInHeader;
 
 	public function __construct() {
 		parent::__construct();
+		$this->_jsInHeader = false;
 	}
 	
 	protected function _init($key,$reset=false) {
@@ -31,7 +33,7 @@ class HtmlAssetHelper extends Collectable {
 		}
 	}
 	
-	public function headerStuff() {
+	public function headerStuff($full=false) {
 	
 		if (count($this->jsCalendar)) {
 			$this->add('css',APP_WWW_URI.'asset/css/calendar.css');
@@ -85,6 +87,12 @@ class HtmlAssetHelper extends Collectable {
 		if (count($this->cssCode)) {
             echo implode("\n",$this->cssCode)."\n";        
         }
+        
+        // javascript external scripts (if specifically requested)
+        if ($full) {
+        	$this->_jsInHeader = true;
+			$this->_javascript();
+		}
 		
 		// javascrpt direct code
 		if (count($this->jsCode)) {
@@ -119,6 +127,12 @@ class HtmlAssetHelper extends Collectable {
 	}
 	
 	public function footerStuff() {
+		if (!$this->_jsInHeader) {
+			$this->_javascript();
+		}
+	}
+	
+	protected function _javascript() {
 		// javascript (include)
 		if (count($this->js)) {
 			foreach($this->js as $it) {

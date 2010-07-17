@@ -4,7 +4,7 @@
  * 
  * @package tzn_core_classes
  * @author Stan Ozier <framework@tirzen.com>
- * @version 0.4
+ * @version 0.5
  * @copyright GNU Lesser General Public License (LGPL) version 3
  */
 
@@ -568,6 +568,11 @@ abstract class VarAbstract
 {
 	abstract public static function sanitize($val, &$info);
 	
+	public static function sani($val) {
+		$tmp = array();
+		return static::sanitize($val, $tmp);
+	}
+	
 	public static function get($val) {
 		return $val;
 	}
@@ -673,6 +678,7 @@ class VarDte extends VarAbstract
 			return '0000-00-00';
 		}
 		if (preg_match('/^[0|2|9][0|1|9][0-9]{2}\-[0-1][0-9]\-[0-3][0-9]$/', $val)) {
+			// SQL format, return as it is (no timezone evaluation)
 			return $val;
 		}
 		if (!$GLOBALS['config']['datetime']['us_format']) {
@@ -698,7 +704,7 @@ class VarDte extends VarAbstract
 	
 	public static function html($val, $format='', $default='') {
 		if (!$format) {
-			$format = $format = $GLOBALS['config']['datetime']['us_format']?APP_DATE_USA:APP_DATE_EUR;;
+			$format = $format = $GLOBALS['config']['datetime']['us_format']?APP_DATE_USA:APP_DATE_EUR;
 		}
 		$t = VarDte::strToUnix($val);
 		if ($t === false) {
@@ -733,8 +739,10 @@ class VarDte extends VarAbstract
 		if ($t === false) {
 			return false;
 		}
+		$t += self::getUserTimeZoneOffset();
 		return $t;
 	}
+	
 }
 
 /**
@@ -812,7 +820,7 @@ class VarTim extends VarDur
 			return 0;
 		}
 		if (preg_match('/^[0-9]+$/', $val)) {
-			// number of seconds, must be coming from SQL
+			// must come from SQL (number of seconds) return as it is (ignore timezone)
 			return intval($val);
 		}
 		if (preg_match('/^([0-2]?[0-9])\:([0-5][0-9])(\:([0-5][0-9]))?$/', $val, $arr)) {
@@ -856,7 +864,7 @@ class VarDtm extends VarAbstract
 			return '0000-00-00 00:00:00';
 		}
 		if (preg_match('/^[0|2|9][0|1|9][0-9]{2}\-[0-1][0-9]\-[0-3][0-9]( ([0-2][0-9]\:[0-5][0-9])(\:[0-5][0-9])?)?$/', $val)) {
-			// SQL format, return it as it is
+			// SQL format, return as it is (no timezone evaluation)
 			return $val;
 		}
 		if ($val == 'NOW') {
@@ -926,14 +934,7 @@ class VarDtm extends VarAbstract
 		$t += self::getUserTimeZoneOffset();
 		return $t;
 	}
-	
-	/**
-	 * work on date format to return human readable value
-	 */
-	public static function workout($val, $seconds=true) {
-		$val += self::getUserTimeZoneOffset();
-		return parent::workout($val);
-	}
+
 }
 
 /**

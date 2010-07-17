@@ -3,7 +3,7 @@
 <div id="dfoot">
 	<div id="dcopy">
 		<a href="http://www.taskfreak.com" target="_blank">TaskFreak</a>
-		<span>TT v0.3</span>
+		<span>TT v0.5</span>
 	</div>
 	<?php
 	$err = false;

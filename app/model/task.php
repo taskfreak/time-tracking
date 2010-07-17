@@ -4,7 +4,7 @@
  * 
  * @package taskfreak_tt
  * @author Stan Ozier <taskfreak@gmail.com>
- * @version 0.4
+ * @version 0.5
  * @copyright GNU General Public License (GPL) version 3
  */
  
@@ -57,7 +57,7 @@ class TaskModel extends Model {
 		}
 		ArrayHelper::arrayTrim($arr);
 		$obj = new TaskModel();
-		$tst = substr($arr[2],0,1);
+		$tst = (empty($arr[1]))?substr($arr[2],0,1):'*';
 		switch ($tst) {
 		case '*': // multiple
 			if ($arr[1] == '**') {
@@ -97,7 +97,7 @@ class TaskModel extends Model {
 				$obj->set('deadline',$arr[2].' days');
 			} else {
 				// no number, means today
-				$obj->set('deadline', APP_SQL_TODAY);
+				$obj->set('deadline', date_format(new DateTime('now', $GLOBALS['config']['datetime']['timezone_user']), 'Y-m-d'));
 			}
 			break;
 		default:
@@ -110,7 +110,7 @@ class TaskModel extends Model {
 				$obj->set('deadline', $dte);
 			} else if ($GLOBALS['config']['task']['date']) {
 				// use default date (config)
-				$obj->set('deadline', $GLOBALS['config']['task']['date']);
+				$obj->set('deadline', date_format(new DateTime($GLOBALS['config']['task']['date'], $GLOBALS['config']['datetime']['timezone_user']), 'Y-m-d'));
 				// $dte = $obj->get('deadline');
 			} else {
 				// no date by default (config)
@@ -196,6 +196,10 @@ class TaskSummary extends TaskModel {
 		return $str;
 	}
 	
+	public function htmlTimes() {
+		return $this->html('start',APP_DATETIME_SHT).' &gt; '.$this->html('stop','%H:%M');
+	}
+	
 	public function htmlBegin() {
 		if ($this->isEmpty('start')) {
 			if ($this->isEmpty('begin')) {
@@ -220,9 +224,9 @@ class TaskSummary extends TaskModel {
 		}
 	}
 	
-	public function htmlEnd($expanded=false) {
+	public function htmlEnd($expanded=false, $default='-') {
 		if ($this->isEmpty('stop')) {
-			return '-';
+			return $default;
 		} else {
 			return $this->html('stop',APP_DATETIME);
 		}
@@ -270,7 +274,9 @@ class TaskSummary extends TaskModel {
 			$this->_diff = 9999;
 		} else {
 			$dead = strtotime($this->get('deadline'));
-			$this->_diff = ($dead - intval(APP_TODAY)) / 3600 / 24;
+			// -TODO- optimize ! maybe using DateTime diff ?
+			$usernow = date_timestamp_get(new DateTime('now', $GLOBALS['config']['datetime']['timezone_user']));
+			$this->_diff = round(($dead - $usernow) / 3600 / 24);
 		}		
 	}
 	
@@ -318,6 +324,36 @@ class TaskSummary extends TaskModel {
 		$h = floor($spent / 60);
 		$m = $spent - ($h*60);
 		return str_pad($h, 2, '0',STR_PAD_LEFT).':'.str_pad($m, 2, '0',STR_PAD_LEFT);
+	}
+	
+	/**
+	 * export data in array for the mobile version (ajax requests)
+	 */
+	public function exportData($method='html') {
+		// prepare general info
+		$arrInfo = array();
+		$arr = $this->getFields();
+		foreach ($arr as $key => $type) {
+			$arrInfo[$key] = $this->$method($key);
+		}
+		
+		// prepare timer history and totals
+		$total = 0;
+		$arrSpent = array();
+		if ($this->get('spent')) {
+			do {
+				$total += $this->get('spent');
+				// start and stop times
+				$times = $this->htmlTimes();
+				$spent = $this->getTimeSpent();
+				$arrSpent[$times] = $spent;
+			} while ($this->next());
+		}
+		
+		$arrInfo['total'] = $this->htmlTime($total);
+		
+		return array('info' => $arrInfo, 'spent' => $arrSpent);
+		// return $arrInfo;
 	}
 	
 	/**

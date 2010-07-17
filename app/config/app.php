@@ -3,10 +3,10 @@
 // ---- LOG and DEBUGGING -----------------------------------------------------
 
 $GLOBALS['config']['log_front'] = 0;
-$GLOBALS['config']['log_debug'] = 0;
+$GLOBALS['config']['log_debug'] = 1;
 $GLOBALS['config']['log_message'] = 0;
 $GLOBALS['config']['log_warn'] = 0;
-$GLOBALS['config']['log_error'] = 1;
+$GLOBALS['config']['log_error'] = 2;
 $GLOBALS['config']['log_core'] = 0;
 
 $GLOBALS['config']['log_signature'] = '[TF]';
@@ -44,9 +44,12 @@ define("APP_DATETIME","%d/%m <small>%H:%M</small>");
 // --- TASKFREAK DEFAULTS ---------------------------------------------------------
 
 $GLOBALS['config']['task'] = array(
-	'date'		=> APP_SQL_TODAY, // default date is today
+	'date'		=> 'now', // default date is today
 	'validate'	=> true	// add validation button
 );
+
+// note for default date :
+// can be any PHP valid date eg. +1 days, +1 week, or false for no date
 
 $GLOBALS['config']['task']['priority'] = array(
 	'options' => array(

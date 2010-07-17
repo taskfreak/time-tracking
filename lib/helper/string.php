@@ -75,4 +75,28 @@ class StringHelper {
 		}
 		return $strCode;
 	}
+	
+	/**
+	 * convert string to XML friendly string (no space, no special caracters)
+	 */
+	public static function cleanStrip($str) {
+		$str = trim($str);
+		if ($str) {
+			/*
+			if (constant('APP_CHARSET') == 'UTF-8') {
+				$str = utf8_decode($str);
+			}
+			*/
+			$str = utf8_decode($str);
+			$str = preg_replace(
+				array('/[יטךכ]/','/[אבגה]/','/[לםמן]/','/[שתûü]/','/[צפער]/','/[ח‡]/','/[ \'\?\/\\&"]/'),
+				array('e','a','i','u','o','c','-'),
+				strtolower($str));
+			$str = preg_replace('/[^a-z0-9\-]/','_',$str);
+			$str = str_replace('---','-',$str);
+			$str = trim($str,'_');
+			$str = trim($str,'-');
+		}
+		return $str;
+	}
 }

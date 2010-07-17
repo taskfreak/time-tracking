@@ -1,6 +1,18 @@
 TaskFreak! Time Tracking
 ------------------------
 
+Version 0.5 : 2010-07-16
+------------------------
+Added iphone (beta) version
+Added german translation
+Added norwegian translation
+Added missing time zones
+Fixed time difference bug with time zones not GMT
+Fixed multi task creation bug
+Fixed windows server file path bug
+Fixed bug on user creation
+
+
 Version 0.4 : 2010-06-11
 ------------------------
 Added multi language support

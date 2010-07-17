@@ -1,0 +1,168 @@
+/* login */
+form p {
+	padding: 5px 10px 50px;
+}
+ul.form li {
+    padding: 7px 10px;
+}
+ul.form li.error {
+    color: #c33;
+    font-weight: normal;
+    font-size: .80em;
+	text-align: center;  
+	border: 0 none;
+}
+/* current task */
+form.highlight {
+	border-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    margin: 0;
+    padding: 0 10px 5px;
+    background-image: none;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #666;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(238,238,238,1)), to(rgba(156,158,160,1)));
+}
+form.highlight h3 {
+	font-size: 18px;
+	line-height: 22px;
+    margin: 0;
+    text-shadow: #fff 0 1px 0;
+    padding: 10px 0;
+}
+form.highlight h3 a {
+	display: block;
+	color: #333;
+	text-decoration: none;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	text-align: center;
+}
+form p.dual, form p.triple {
+	clear: both;
+    overflow: hidden;
+    padding-bottom: 3px;
+}
+form p.dual span, form p.triple span {
+	float: left;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    width: 48%;
+    display: block;
+    padding: 11px 10px 14px 10px;
+}
+form p.dual span + span {
+    float: right;
+}
+form p.triple span {
+	width: 31%;
+}
+form p.triple span + span {
+	margin-left: 3%;
+}
+form p.triple span + span + span {
+	float: right;
+}
+form p.dual span a, form p.triple span a {
+	color: #fff;
+	font-size: 14px;
+    line-height: 16px;
+    margin: -11px -10px -14px -10px;
+    padding: 11px 10px 14px 10px;
+}
+/* more fields */
+ul li {
+	color: #999;
+}
+ul li.note {
+	font-size: 14px;
+	text-align: justify;
+}
+ul li input[type="text"], ul li input[type="password"], ul li textarea, ul li select,
+ul li input[type="number"], ul li input[type="email"] {
+    color: #777;
+    background-color: transparent;
+    background-image: none;
+    border: 0 none;
+    font: normal 17px Helvetica;
+    padding: 3px 1px;
+    display: inline-block;
+    margin-left: 0px;
+    width: 100%;
+    -webkit-appearance: textarea;
+}
+/* buttons */
+button {
+	background-color: transparent;
+}
+.whiteButton,
+.lightButton,
+.darkButton,
+.blackButton {
+    display: block;
+    border-width: 0 12px;
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: inherit;
+    color: #fff;
+}
+.whiteButton {
+    text-shadow: rgba(51, 51, 51, 0.7) 0 1px 0;
+}
+.lightButton {
+    -webkit-border-image: url(../img/lightButton.png) 0 12 0 12;
+    text-shadow: rgba(51, 51, 51, 0.7) 0 1px 0;
+}
+.darkButton {
+    -webkit-border-image: url(../img/darkButton.png) 0 12 0 12;
+    text-shadow: rgba(0, 0, 0, 0.7) 0 1px 0;
+}
+.blackButton {
+    -webkit-border-image: url(../../../asset/jqtouch/themes/jqt/img/grayButton.png) 0 12 0 12;
+    color: #FFFFFF;
+}
+.logout, .modify {
+    position: absolute;
+    overflow: hidden;
+    top: 8px;
+    right: 10px;
+    margin: 0;
+    border-width: 0 5px;
+    padding: 0 3px;
+    width: auto;
+    height: 30px;
+    line-height: 30px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: rgba(0, 0, 0, 0.5) 0px -1px 0;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    white-space: nowrap;
+    background: none;
+    -webkit-border-image: url(../../../asset/jqtouch/themes/jqt/img/button.png) 0 5 0 5;
+}
+.logout {
+    left: 6px;
+    right: auto;
+    padding: 0;
+    max-width: 55px;
+}
+.hide {
+	display: none;
+}
+/* bottom info bar */
+.info a {
+	color: #633;
+}
+.bottom {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}

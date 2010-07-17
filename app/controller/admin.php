@@ -101,11 +101,9 @@ class Admin extends AppController {
 		if ($this->fc->chkReqVar('pass1') && $this->fc->chkReqVar('pass2')) {
 			if ($this->data->setPassword($this->fc->getReqVar('pass1'), $this->fc->getReqVar('pass2'))) {
 				// save it all
-				error_log('setting new password : '.$this->fc->getReqVar('pass1'));
 				$this->data->ignore();
 			} else {
 				// do not save password
-				error_log('can not save password');
 				$this->data->ignore('password,salt');
 			}
 		}
@@ -116,7 +114,6 @@ class Admin extends AppController {
 			if ($this->data->save(!$myself)) {
 				if ($myself) {
 					// editing own profile need to reset session
-					error_log('updating session');
 					$this->data->updateSessionVariables();
 				}
 				$this->fc->autoRedirect('saved');

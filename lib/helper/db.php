@@ -4,7 +4,7 @@
  * 
  * @package tzn_helpers
  * @author Stan Ozier <framework@tirzen.com>
- * @version 0.2
+ * @version 0.5
  * @since 0.1
  * @copyright GNU Lesser General Public License (LGPL) version 3
  */
@@ -30,6 +30,10 @@ class DbHelper extends Helper implements Callable {
 		$this->db = DbConnector::getConnection();
 		$this->qry = new DbQueryHelper();
 		$this->table = $table;
+	}
+	
+	public static function factory() {
+		return new DbHelper(null, '');
 	}
 	
 	// ----- INSERTion queries ---------------------------------------------------
@@ -133,6 +137,7 @@ class DbHelper extends Helper implements Callable {
 	public function load($filter='', $auto=true) {
 		if ($auto) {
 			$this->buildSelect();
+			$this->buildFrom();
 		}
 		if ($this->buildWhere($filter)) {
 			$this->qry->where($filter);
@@ -157,8 +162,9 @@ class DbHelper extends Helper implements Callable {
 	public function loadList($auto=true) {
 		if ($auto) {
 			$this->buildSelect();
+			$this->buildFrom();
+			$this->obj->all();
 		}
-		$this->obj->all();
 		if ($data = $this->db->query($this->qry->build())) {
 			$this->idx = 0;
 			$this->total = 0;
@@ -180,6 +186,13 @@ class DbHelper extends Helper implements Callable {
 		return false;
 	}
 	
+	/**
+	 * query database and return result set directly
+	 */
+	public function loadRaw() {
+		return $this->db->query($this->qry->build());
+	}
+	
 	public function count() {
 		return count($this->rows);
 	}
@@ -190,7 +203,9 @@ class DbHelper extends Helper implements Callable {
 	
 	public function next() {
 		if (array_key_exists($this->idx, $this->rows)) {
-			$this->obj->set($this->rows[$this->idx]);
+			if (is_a($this->obj, 'Model')) {
+				$this->obj->set($this->rows[$this->idx]);
+			}
 			$this->idx++;
 			return true;
 		} else {
@@ -287,6 +302,12 @@ class DbHelper extends Helper implements Callable {
 		$select = $this->buildFields();
 		// add SELECT clause
 		$this->qry->select($select);
+	}
+	
+	/**
+	 * build FROM clause
+	 */
+	public function buildFrom() {
 		// add FROM clause
 		$this->qry->from($this->dbTable());
 	}

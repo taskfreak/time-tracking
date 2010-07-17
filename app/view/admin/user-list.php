@@ -5,7 +5,7 @@ $this->incView('include/page-top', false);
 <div id="dmain" class="full">
 	<div id="dfilters">
 		<span>
-			<a href="<?php echo $this->fc->getUrl('admin/edit');?>" class="ajax box new inv" title="<?php TR::phtml('ui','create_user'); ?>"><?php TR::phtml('ui','create_user'); ?></a>
+			<a href="<?php echo $this->fc->getUrl('admin','edit');?>" class="ajax box new inv" title="<?php TR::phtml('ui','create_user'); ?>"><?php TR::phtml('ui','create_user'); ?></a>
 		</span>
 		<ul class="links horiz">
 			<?php
